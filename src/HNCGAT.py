@@ -12,17 +12,25 @@ from utils import readListfile, get_train_index, calculateauc
 import argparse
 import warnings
 from loss import multi_contrastive_loss
+from loss_weighted import AdaptiveWeightedPConLoss, AdaptiveWeightedMConLoss, AdaptiveWeightedFConLoss
 from datetime import date
 
 # protein: nodeA; Metabolite: nodeB; GO: nodeC
 
 class MPINet(torch.nn.Module):
     def __init__(self, nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num, nodeC_feature_num, hidden_dim,
-                 dropout,edgetype):
+                 dropout, edgetype, use_weighted_loss=False, use_attention=True, tau=0.1):
         super(MPINet, self).__init__()
         self.encoder_1 = graphNetworkEmbbed(nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num,
                                             nodeC_feature_num, hidden_dim, dropout)
-        self.decoder = MlpDecoder(hidden_dim,edgetype)
+        self.decoder = MlpDecoder(hidden_dim, edgetype)
+        self.use_weighted_loss = use_weighted_loss
+        
+        # 如果使用加权损失，添加加权损失模块作为可训练参数
+        if use_weighted_loss:
+            self.weighted_P_loss = AdaptiveWeightedPConLoss(hidden_dim, tau, use_attention)
+            self.weighted_M_loss = AdaptiveWeightedMConLoss(hidden_dim, tau, use_attention)
+            self.weighted_F_loss = AdaptiveWeightedFConLoss(hidden_dim, tau, use_attention)
 
     def forward(self, data_set, adj_AB, adj_AC, adj_BC, nodeA_feature, nodeB_feature, nodeC_feature, adj_A_sim,
                 adj_B_sim,edgetype):
@@ -345,7 +353,10 @@ def main(args):
             train_adj_AB=torch.Tensor(train_adj_AB)
             
             model = MPINet(nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num, nodeC_feature_num, hidden_dim,
-                           dropout,edgetype)
+                           dropout, edgetype, 
+                           use_weighted_loss=args.use_weighted_loss,
+                           use_attention=args.weight_attention,
+                           tau=tau)
             
             # Determine device
             device = torch.device(f'cuda:{args.gpu}' if args.gpu >= 0 and torch.cuda.is_available() else 'cpu')
@@ -386,9 +397,22 @@ def main(args):
                 label = data_set[:, 2].float()
                 
                 train_auc, _ = calculateauc(prob[train_mask], data_set[:, 2][train_mask])
-                conloss=multi_contrastive_loss(embA,embB,embC,adj_A_sim, adj_B_sim,train_adj_AB,adj_AC,adj_BC,tau)
                 
-                loss = loss_func(prob[train_mask], label[train_mask])+lamb*conloss 
+                # 使用加权损失或原始损失
+                if model.use_weighted_loss:
+                    P_loss, P_weights = model.weighted_P_loss(embA, embB, embC, train_adj_AB, adj_A_sim, adj_AC)
+                    M_loss, M_weights = model.weighted_M_loss(embB, embA, embC, train_adj_AB.T, adj_B_sim, adj_BC)
+                    F_loss, F_weights = model.weighted_F_loss(embC, embB, embA, adj_BC.T, adj_AC.T)
+                    conloss = (P_loss + M_loss + F_loss) / 3
+                    
+                    # 可选：每100个epoch打印权重信息（用于分析）
+                    if epoch % 100 == 0 and epoch > 0:
+                        print(f"Epoch {epoch} - Average weights - PM:{P_weights[:, 0].mean():.3f}, "
+                              f"PP:{P_weights[:, 1].mean():.3f}, PF:{P_weights[:, 2].mean():.3f}")
+                else:
+                    conloss = multi_contrastive_loss(embA, embB, embC, adj_A_sim, adj_B_sim, train_adj_AB, adj_AC, adj_BC, tau)
+                
+                loss = loss_func(prob[train_mask], label[train_mask]) + lamb * conloss 
                 loss.backward()
                 opt.step()
                 model.eval()
@@ -480,6 +504,10 @@ if __name__ == "__main__":
     parser.add_argument('--dropout', type=float, default=0.5, help='dropout')
     parser.add_argument('--temperature', type=float, default=0.1, help='temperature')
     parser.add_argument('--edgetype', type=str, default='concat', help='edgetype')
+    parser.add_argument('--use-weighted-loss', action='store_true', 
+                        help='Use weighted contrastive loss (addresses paper limitations)')
+    parser.add_argument('--weight-attention', action='store_true', default=True,
+                        help='Use attention mechanism for learning weights (default: True)')
     args = parser.parse_args()
     print(args)
     warnings.filterwarnings("ignore")
