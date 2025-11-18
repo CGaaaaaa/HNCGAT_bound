@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# 模型文件（太大，不上传）
+*.pkl
+*.pth
+*.pt
+*.h5
+
+# 日志文件
+*.log
+
+# 数据文件（太大，通常不上传）
+*.npz
+*.npy
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 临时文件
+*.tmp
+*.bak
+

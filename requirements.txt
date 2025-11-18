@@ -1,0 +1,14 @@
+# HNCGAT Environment Requirements
+# Python 3.9.13 is required
+# Tested and verified based on code analysis
+
+# Core deep learning framework
+torch==1.10.1
+
+# Scientific computing
+numpy==1.22.4
+scipy==1.8.1
+
+# Machine learning utilities
+scikit-learn==1.0.2
+

@@ -74,7 +74,7 @@ class biattenlayer(torch.nn.Module):
         att_IJ = torch.where(adj_mat > 0, edge_logits, zero_vec)
         att_IJ = self.softmax(att_IJ)
         rowmean=1/att_IJ.size()[1] 
-        att_IJ = torch.where(abs(att_IJ-rowmean)<1e-9,torch.tensor(0.).cuda(),att_IJ)        
+        att_IJ = torch.where(abs(att_IJ-rowmean)<1e-9,torch.tensor(0.).to(att_IJ.device),att_IJ)        
         return att_IJ
 
 
@@ -309,7 +309,7 @@ def main(args):
     adj_AC=torch.Tensor(adj_AC)
     adj_BC=torch.Tensor(adj_BC)
 
-    trp_varied = [0.9]
+    trp_varied = [0.3]
     AUC_ROCAll = []
     AUCstdALL = []
     AUC_PRAll = []
@@ -346,7 +346,10 @@ def main(args):
             
             model = MPINet(nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num, nodeC_feature_num, hidden_dim,
                            dropout,edgetype)
-            cost_sensitive=torch.Tensor([10.]).cuda()
+            
+            # Determine device
+            device = torch.device(f'cuda:{args.gpu}' if args.gpu >= 0 and torch.cuda.is_available() else 'cpu')
+            cost_sensitive=torch.Tensor([10.]).to(device)
             
             loss_func = torch.nn.BCELoss(reduction='mean',weight=cost_sensitive)
             
@@ -361,18 +364,17 @@ def main(args):
             nodeA_feature = torch.rand(nodeA_num, nodeA_feature_num, requires_grad=True)
             nodeB_feature = torch.rand(nodeB_num, nodeB_feature_num, requires_grad=True)
             nodeC_feature = torch.rand(nodeC_num, nodeC_feature_num, requires_grad=True)
-            if args.gpu >= 0 and torch.cuda.is_available():
-                model = model.cuda()
-                data_set = data_set.cuda()
-
-                nodeA_feature = nodeA_feature.cuda()
-                nodeB_feature = nodeB_feature.cuda()
-                nodeC_feature = nodeC_feature.cuda()
-                adj_A_sim = adj_A_sim.cuda()
-                adj_B_sim = adj_B_sim.cuda()
-                adj_AC=adj_AC.cuda()
-                adj_BC=adj_BC.cuda()
-                train_adj_AB=train_adj_AB.cuda()                
+            # Move model and data to device
+            model = model.to(device)
+            data_set = data_set.to(device)
+            nodeA_feature = nodeA_feature.to(device)
+            nodeB_feature = nodeB_feature.to(device)
+            nodeC_feature = nodeC_feature.to(device)
+            adj_A_sim = adj_A_sim.to(device)
+            adj_B_sim = adj_B_sim.to(device)
+            adj_AC = adj_AC.to(device)
+            adj_BC = adj_BC.to(device)
+            train_adj_AB = train_adj_AB.to(device)                
                 
             for epoch in range(args.n_epochs):
 
