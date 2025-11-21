@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 """
-加权邻居对比损失实现
+加权邻居对比损失实现（修正版 v2）
 解决论文Limitations中提到的"所有邻居被平等对待"的问题
 
 改进点：
 1. 为不同邻居类型（PM, PP, PF）学习自适应权重
 2. 使用注意力机制为每个节点学习特定的权重
 3. 解决原论文中所有邻居被平等对待的局限性
+
+修正内容（v2）：
+1. 修正分母结构，使其与原始损失函数完全一致
+   - PM/MP: 只考虑正样本对
+   - PP/MM/PF/MF: 考虑所有对
+2. 添加温度缩放（温度=0.7），防止权重过度集中到单一邻居类型
+3. 保持与原始损失函数的数学一致性，确保改进的有效性
 """
 import torch
 import torch.nn as nn
@@ -24,11 +31,12 @@ class AdaptiveWeightedPConLoss(nn.Module):
     "all the heterogeneous neighbors of the anchor are treated equally 
     in the current neighbor contrastive loss"
     """
-    def __init__(self, hidden_dim, tau=0.1, use_attention=True):
+    def __init__(self, hidden_dim, tau=0.1, use_attention=True, weight_temperature=0.7):
         super(AdaptiveWeightedPConLoss, self).__init__()
         self.tau = tau
         self.use_attention = use_attention
         self.hidden_dim = hidden_dim
+        self.weight_temperature = weight_temperature  # 权重softmax的温度参数
         
         if use_attention:
             # 使用注意力机制学习权重（节点特定的权重）
@@ -54,7 +62,7 @@ class AdaptiveWeightedPConLoss(nn.Module):
     
     def forward(self, embP, embM, embF, PM_adj, PP_adj, PF_adj):
         """
-        计算加权对比损失
+        计算加权对比损失（修正版：匹配原始损失的分母结构）
         
         Args:
             embP: 蛋白质节点嵌入 [N_P, hidden_dim]
@@ -77,7 +85,9 @@ class AdaptiveWeightedPConLoss(nn.Module):
         if self.use_attention:
             # 节点特定的权重：每个节点学习自己的权重分配
             neighbor_features = torch.stack([PM_repr, PP_repr, PF_repr], dim=1)  # [N_P, 3, hidden_dim]
-            weights = self.attention_mlp(neighbor_features.view(embP.size(0), -1))  # [N_P, 3]
+            raw_weights = self.attention_mlp(neighbor_features.view(embP.size(0), -1))  # [N_P, 3]
+            # 添加温度缩放，防止权重过度集中（温度参数可调）
+            weights = F.softmax(raw_weights / self.weight_temperature, dim=-1)
         else:
             # 全局权重：所有节点共享相同的权重
             weights = F.softmax(self.weights, dim=0).unsqueeze(0).expand(embP.size(0), -1)
@@ -93,27 +103,30 @@ class AdaptiveWeightedPConLoss(nn.Module):
         PP_sim = f(sim(embP_norm, embP_norm))
         PF_sim = f(sim(embP_norm, embF_norm))
         
-        # 加权正样本对
+        # 正样本对
         PM_positive = (PM_sim * PM_adj).sum(1)  # [N_P]
         PP_positive = (PP_sim * PP_adj).sum(1)
         PF_positive = (PF_sim * PF_adj).sum(1)
         
+        # 加权正样本对（分子）
         weighted_positive = (weights[:, 0] * PM_positive + 
                             weights[:, 1] * PP_positive + 
                             weights[:, 2] * PF_positive)
         
-        # 负样本对（所有非邻居）
-        PM_negative = PM_sim.sum(1) - PM_positive
-        PP_negative = PP_sim.sum(1) - PP_positive
-        PF_negative = PF_sim.sum(1) - PF_positive
+        # 匹配原始损失的分母结构：
+        # 原始：PM只考虑正样本，PP和PF考虑所有对
+        PM_all = PM_positive  # PM只考虑正样本
+        PP_all = PP_sim.sum(1)  # PP考虑所有对
+        PF_all = PF_sim.sum(1)  # PF考虑所有对
         
-        weighted_negative = (weights[:, 0] * PM_negative + 
-                            weights[:, 1] * PP_negative + 
-                            weights[:, 2] * PF_negative)
+        # 加权分母
+        weighted_denominator = (weights[:, 0] * PM_all + 
+                               weights[:, 1] * PP_all + 
+                               weights[:, 2] * PF_all)
         
-        # 计算损失
+        # 计算损失（匹配原始公式结构）
         nei_count = (PM_adj.sum(1) + PP_adj.sum(1) + PF_adj.sum(1)).clamp(min=1)
-        loss = weighted_positive / (weighted_positive + weighted_negative)
+        loss = weighted_positive / weighted_denominator
         loss = loss / nei_count
         loss = loss.clamp(min=1e-10)  # 避免log(0)
         
@@ -126,11 +139,12 @@ class AdaptiveWeightedMConLoss(nn.Module):
     为MP（代谢物-蛋白质）、MM（代谢物-代谢物）、MF（代谢物-功能注释）
     三种邻居类型学习权重
     """
-    def __init__(self, hidden_dim, tau=0.1, use_attention=True):
+    def __init__(self, hidden_dim, tau=0.1, use_attention=True, weight_temperature=0.7):
         super(AdaptiveWeightedMConLoss, self).__init__()
         self.tau = tau
         self.use_attention = use_attention
         self.hidden_dim = hidden_dim
+        self.weight_temperature = weight_temperature  # 权重softmax的温度参数
         
         if use_attention:
             self.attention_mlp = nn.Sequential(
@@ -157,7 +171,9 @@ class AdaptiveWeightedMConLoss(nn.Module):
         # 学习权重
         if self.use_attention:
             neighbor_features = torch.stack([MP_repr, MM_repr, MF_repr], dim=1)
-            weights = self.attention_mlp(neighbor_features.view(embM.size(0), -1))
+            raw_weights = self.attention_mlp(neighbor_features.view(embM.size(0), -1))
+            # 添加温度缩放，防止权重过度集中（温度参数可调）
+            weights = F.softmax(raw_weights / self.weight_temperature, dim=-1)
         else:
             weights = F.softmax(self.weights, dim=0).unsqueeze(0).expand(embM.size(0), -1)
         
@@ -172,25 +188,30 @@ class AdaptiveWeightedMConLoss(nn.Module):
         MM_sim = f(sim(embM_norm, embM_norm))
         MF_sim = f(sim(embM_norm, embF_norm))
         
-        # 加权正样本
+        # 正样本对
         MP_positive = (MP_sim * MP_adj).sum(1)
         MM_positive = (MM_sim * MM_adj).sum(1)
         MF_positive = (MF_sim * MF_adj).sum(1)
+        
+        # 加权正样本对（分子）
         weighted_positive = (weights[:, 0] * MP_positive + 
                             weights[:, 1] * MM_positive + 
                             weights[:, 2] * MF_positive)
         
-        # 负样本
-        MP_negative = MP_sim.sum(1) - MP_positive
-        MM_negative = MM_sim.sum(1) - MM_positive
-        MF_negative = MF_sim.sum(1) - MF_positive
-        weighted_negative = (weights[:, 0] * MP_negative + 
-                            weights[:, 1] * MM_negative + 
-                            weights[:, 2] * MF_negative)
+        # 匹配原始损失的分母结构：
+        # 原始：MP只考虑正样本，MM和MF考虑所有对
+        MP_all = MP_positive  # MP只考虑正样本
+        MM_all = MM_sim.sum(1)  # MM考虑所有对
+        MF_all = MF_sim.sum(1)  # MF考虑所有对
         
-        # 计算损失
+        # 加权分母
+        weighted_denominator = (weights[:, 0] * MP_all + 
+                               weights[:, 1] * MM_all + 
+                               weights[:, 2] * MF_all)
+        
+        # 计算损失（匹配原始公式结构）
         nei_count = (MP_adj.sum(1) + MM_adj.sum(1) + MF_adj.sum(1)).clamp(min=1)
-        loss = weighted_positive / (weighted_positive + weighted_negative)
+        loss = weighted_positive / weighted_denominator
         loss = loss / nei_count
         loss = loss.clamp(min=1e-10)
         
@@ -203,11 +224,12 @@ class AdaptiveWeightedFConLoss(nn.Module):
     为FM（功能注释-代谢物）、FP（功能注释-蛋白质）
     两种邻居类型学习权重
     """
-    def __init__(self, hidden_dim, tau=0.1, use_attention=True):
+    def __init__(self, hidden_dim, tau=0.1, use_attention=True, weight_temperature=0.7):
         super(AdaptiveWeightedFConLoss, self).__init__()
         self.tau = tau
         self.use_attention = use_attention
         self.hidden_dim = hidden_dim
+        self.weight_temperature = weight_temperature  # 权重softmax的温度参数
         
         if use_attention:
             self.attention_mlp = nn.Sequential(
@@ -233,7 +255,9 @@ class AdaptiveWeightedFConLoss(nn.Module):
         # 学习权重
         if self.use_attention:
             neighbor_features = torch.stack([FM_repr, FP_repr], dim=1)
-            weights = self.attention_mlp(neighbor_features.view(embF.size(0), -1))
+            raw_weights = self.attention_mlp(neighbor_features.view(embF.size(0), -1))
+            # 添加温度缩放，防止权重过度集中（温度参数可调）
+            weights = F.softmax(raw_weights / self.weight_temperature, dim=-1)
         else:
             weights = F.softmax(self.weights, dim=0).unsqueeze(0).expand(embF.size(0), -1)
         
@@ -247,21 +271,26 @@ class AdaptiveWeightedFConLoss(nn.Module):
         FM_sim = f(sim(embF_norm, embM_norm))
         FP_sim = f(sim(embF_norm, embP_norm))
         
-        # 加权正样本
+        # 正样本对
         FM_positive = (FM_sim * FM_adj).sum(1)
         FP_positive = (FP_sim * FP_adj).sum(1)
+        
+        # 加权正样本对（分子）
         weighted_positive = (weights[:, 0] * FM_positive + 
                             weights[:, 1] * FP_positive)
         
-        # 负样本
-        FM_negative = FM_sim.sum(1) - FM_positive
-        FP_negative = FP_sim.sum(1) - FP_positive
-        weighted_negative = (weights[:, 0] * FM_negative + 
-                            weights[:, 1] * FP_negative)
+        # 匹配原始损失的分母结构：
+        # 原始：FM和FP都考虑所有对
+        FM_all = FM_sim.sum(1)  # FM考虑所有对
+        FP_all = FP_sim.sum(1)  # FP考虑所有对
         
-        # 计算损失
+        # 加权分母
+        weighted_denominator = (weights[:, 0] * FM_all + 
+                               weights[:, 1] * FP_all)
+        
+        # 计算损失（匹配原始公式结构）
         nei_count = (FM_adj.sum(1) + FP_adj.sum(1)).clamp(min=1)
-        loss = weighted_positive / (weighted_positive + weighted_negative)
+        loss = weighted_positive / weighted_denominator
         loss = loss / nei_count
         loss = loss.clamp(min=1e-10)
         

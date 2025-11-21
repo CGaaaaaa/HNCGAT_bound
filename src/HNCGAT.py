@@ -19,7 +19,7 @@ from datetime import date
 
 class MPINet(torch.nn.Module):
     def __init__(self, nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num, nodeC_feature_num, hidden_dim,
-                 dropout, edgetype, use_weighted_loss=False, use_attention=True, tau=0.1):
+                 dropout, edgetype, use_weighted_loss=False, use_attention=True, tau=0.1, weight_temperature=0.7):
         super(MPINet, self).__init__()
         self.encoder_1 = graphNetworkEmbbed(nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num,
                                             nodeC_feature_num, hidden_dim, dropout)
@@ -28,9 +28,9 @@ class MPINet(torch.nn.Module):
         
         # 如果使用加权损失，添加加权损失模块作为可训练参数
         if use_weighted_loss:
-            self.weighted_P_loss = AdaptiveWeightedPConLoss(hidden_dim, tau, use_attention)
-            self.weighted_M_loss = AdaptiveWeightedMConLoss(hidden_dim, tau, use_attention)
-            self.weighted_F_loss = AdaptiveWeightedFConLoss(hidden_dim, tau, use_attention)
+            self.weighted_P_loss = AdaptiveWeightedPConLoss(hidden_dim, tau, use_attention, weight_temperature)
+            self.weighted_M_loss = AdaptiveWeightedMConLoss(hidden_dim, tau, use_attention, weight_temperature)
+            self.weighted_F_loss = AdaptiveWeightedFConLoss(hidden_dim, tau, use_attention, weight_temperature)
 
     def forward(self, data_set, adj_AB, adj_AC, adj_BC, nodeA_feature, nodeB_feature, nodeC_feature, adj_A_sim,
                 adj_B_sim,edgetype):
@@ -317,7 +317,7 @@ def main(args):
     adj_AC=torch.Tensor(adj_AC)
     adj_BC=torch.Tensor(adj_BC)
 
-    trp_varied = [0.3]
+    trp_varied = [0.9]  # 训练比例：90%
     AUC_ROCAll = []
     AUCstdALL = []
     AUC_PRAll = []
@@ -356,7 +356,8 @@ def main(args):
                            dropout, edgetype, 
                            use_weighted_loss=args.use_weighted_loss,
                            use_attention=args.weight_attention,
-                           tau=tau)
+                           tau=tau,
+                           weight_temperature=args.weight_temperature)
             
             # Determine device
             device = torch.device(f'cuda:{args.gpu}' if args.gpu >= 0 and torch.cuda.is_available() else 'cpu')
@@ -508,6 +509,8 @@ if __name__ == "__main__":
                         help='Use weighted contrastive loss (addresses paper limitations)')
     parser.add_argument('--weight-attention', action='store_true', default=True,
                         help='Use attention mechanism for learning weights (default: True)')
+    parser.add_argument('--weight-temperature', type=float, default=0.7,
+                        help='Temperature parameter for weight softmax (default: 0.7). Lower values make weights more uniform, higher values allow more concentration.')
     args = parser.parse_args()
     print(args)
     warnings.filterwarnings("ignore")
