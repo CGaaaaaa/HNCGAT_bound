@@ -1,0 +1,576 @@
+nohup: ignoring input
+/opt/conda/envs/hncgat/lib/python3.9/site-packages/torch/torch_version.py:3: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import packaging  # type: ignore[attr-defined]
+Namespace(gpu=0, n_epochs=1000, lr=0.005, lamb=1, hid_dim=64, dropout=0.5, temperature=0.1, edgetype='concat', use_weighted_loss=True, weight_attention=True, weight_temperature=0.8)
+1-th random split with training ratio 0.900000
+Epoch 001 | Loss 16.8676 | TrainAUC 0.4804 | testAUC_ROC 0.5621 |  testAUCpr 0.1387 
+Epoch 010 | Loss 11.8274 | TrainAUC 0.7620 | testAUC_ROC 0.8480 |  testAUCpr 0.3571 
+Epoch 020 | Loss 10.7446 | TrainAUC 0.9070 | testAUC_ROC 0.8996 |  testAUCpr 0.4669 
+Epoch 030 | Loss 10.2538 | TrainAUC 0.9316 | testAUC_ROC 0.9144 |  testAUCpr 0.5334 
+Epoch 040 | Loss 9.7372 | TrainAUC 0.9459 | testAUC_ROC 0.9265 |  testAUCpr 0.5703 
+Epoch 050 | Loss 9.3613 | TrainAUC 0.9551 | testAUC_ROC 0.9304 |  testAUCpr 0.5820 
+Epoch 060 | Loss 9.0630 | TrainAUC 0.9595 | testAUC_ROC 0.9317 |  testAUCpr 0.5995 
+Epoch 070 | Loss 8.7667 | TrainAUC 0.9617 | testAUC_ROC 0.9330 |  testAUCpr 0.6126 
+Epoch 080 | Loss 8.5466 | TrainAUC 0.9646 | testAUC_ROC 0.9343 |  testAUCpr 0.6250 
+Epoch 090 | Loss 8.3799 | TrainAUC 0.9652 | testAUC_ROC 0.9354 |  testAUCpr 0.6382 
+Epoch 100 | Loss 8.2661 | TrainAUC 0.9661 | testAUC_ROC 0.9371 |  testAUCpr 0.6437 
+Epoch 100 - Average weights - PM:0.305, PP:0.182, PF:0.512
+Epoch 110 | Loss 8.1346 | TrainAUC 0.9694 | testAUC_ROC 0.9380 |  testAUCpr 0.6383 
+Epoch 120 | Loss 8.0340 | TrainAUC 0.9696 | testAUC_ROC 0.9430 |  testAUCpr 0.6800 
+Epoch 130 | Loss 7.9876 | TrainAUC 0.9696 | testAUC_ROC 0.9398 |  testAUCpr 0.6628 
+Epoch 140 | Loss 7.9153 | TrainAUC 0.9699 | testAUC_ROC 0.9390 |  testAUCpr 0.6629 
+Epoch 150 | Loss 7.9458 | TrainAUC 0.9707 | testAUC_ROC 0.9434 |  testAUCpr 0.6793 
+Epoch 160 | Loss 7.7838 | TrainAUC 0.9726 | testAUC_ROC 0.9430 |  testAUCpr 0.6831 
+Epoch 170 | Loss 7.7296 | TrainAUC 0.9737 | testAUC_ROC 0.9438 |  testAUCpr 0.6830 
+Epoch 180 | Loss 7.6760 | TrainAUC 0.9741 | testAUC_ROC 0.9508 |  testAUCpr 0.7283 
+Epoch 190 | Loss 7.6245 | TrainAUC 0.9752 | testAUC_ROC 0.9478 |  testAUCpr 0.7074 
+Epoch 200 | Loss 7.5733 | TrainAUC 0.9756 | testAUC_ROC 0.9493 |  testAUCpr 0.7246 
+Epoch 200 - Average weights - PM:0.305, PP:0.182, PF:0.513
+Epoch 210 | Loss 7.5734 | TrainAUC 0.9757 | testAUC_ROC 0.9489 |  testAUCpr 0.7238 
+Epoch 220 | Loss 7.5586 | TrainAUC 0.9756 | testAUC_ROC 0.9516 |  testAUCpr 0.7416 
+Epoch 230 | Loss 7.4915 | TrainAUC 0.9775 | testAUC_ROC 0.9528 |  testAUCpr 0.7515 
+Epoch 240 | Loss 7.4243 | TrainAUC 0.9776 | testAUC_ROC 0.9495 |  testAUCpr 0.7247 
+Epoch 250 | Loss 7.4074 | TrainAUC 0.9778 | testAUC_ROC 0.9548 |  testAUCpr 0.7639 
+Epoch 260 | Loss 7.3298 | TrainAUC 0.9791 | testAUC_ROC 0.9544 |  testAUCpr 0.7658 
+Epoch 270 | Loss 7.3035 | TrainAUC 0.9798 | testAUC_ROC 0.9545 |  testAUCpr 0.7687 
+Epoch 280 | Loss 7.2737 | TrainAUC 0.9803 | testAUC_ROC 0.9553 |  testAUCpr 0.7640 
+Epoch 290 | Loss 7.2268 | TrainAUC 0.9808 | testAUC_ROC 0.9555 |  testAUCpr 0.7755 
+Epoch 300 | Loss 7.2092 | TrainAUC 0.9808 | testAUC_ROC 0.9561 |  testAUCpr 0.7708 
+Epoch 300 - Average weights - PM:0.305, PP:0.182, PF:0.513
+Epoch 310 | Loss 7.1729 | TrainAUC 0.9812 | testAUC_ROC 0.9572 |  testAUCpr 0.7806 
+Epoch 320 | Loss 7.2013 | TrainAUC 0.9815 | testAUC_ROC 0.9560 |  testAUCpr 0.7764 
+Epoch 330 | Loss 7.1169 | TrainAUC 0.9825 | testAUC_ROC 0.9585 |  testAUCpr 0.7865 
+Epoch 340 | Loss 7.1203 | TrainAUC 0.9822 | testAUC_ROC 0.9584 |  testAUCpr 0.7872 
+Epoch 350 | Loss 7.0980 | TrainAUC 0.9830 | testAUC_ROC 0.9570 |  testAUCpr 0.7745 
+Epoch 360 | Loss 7.0371 | TrainAUC 0.9835 | testAUC_ROC 0.9574 |  testAUCpr 0.7825 
+Epoch 370 | Loss 7.0055 | TrainAUC 0.9842 | testAUC_ROC 0.9584 |  testAUCpr 0.7851 
+Epoch 380 | Loss 7.0133 | TrainAUC 0.9840 | testAUC_ROC 0.9601 |  testAUCpr 0.7902 
+Epoch 390 | Loss 6.9922 | TrainAUC 0.9842 | testAUC_ROC 0.9589 |  testAUCpr 0.7887 
+Epoch 400 | Loss 6.9846 | TrainAUC 0.9843 | testAUC_ROC 0.9611 |  testAUCpr 0.7963 
+Epoch 400 - Average weights - PM:0.304, PP:0.182, PF:0.514
+Epoch 410 | Loss 6.9418 | TrainAUC 0.9854 | testAUC_ROC 0.9610 |  testAUCpr 0.7991 
+Epoch 420 | Loss 6.9338 | TrainAUC 0.9855 | testAUC_ROC 0.9615 |  testAUCpr 0.8005 
+Epoch 430 | Loss 6.9077 | TrainAUC 0.9858 | testAUC_ROC 0.9623 |  testAUCpr 0.8139 
+Epoch 440 | Loss 6.9640 | TrainAUC 0.9844 | testAUC_ROC 0.9629 |  testAUCpr 0.8083 
+Epoch 450 | Loss 6.8893 | TrainAUC 0.9862 | testAUC_ROC 0.9621 |  testAUCpr 0.8114 
+Epoch 460 | Loss 6.8598 | TrainAUC 0.9864 | testAUC_ROC 0.9640 |  testAUCpr 0.8123 
+Epoch 470 | Loss 6.9104 | TrainAUC 0.9858 | testAUC_ROC 0.9624 |  testAUCpr 0.8062 
+Epoch 480 | Loss 6.8380 | TrainAUC 0.9867 | testAUC_ROC 0.9635 |  testAUCpr 0.8109 
+Epoch 490 | Loss 6.8458 | TrainAUC 0.9868 | testAUC_ROC 0.9628 |  testAUCpr 0.8070 
+Epoch 500 | Loss 6.8700 | TrainAUC 0.9864 | testAUC_ROC 0.9643 |  testAUCpr 0.8169 
+Epoch 500 - Average weights - PM:0.303, PP:0.182, PF:0.515
+Epoch 510 | Loss 6.8543 | TrainAUC 0.9866 | testAUC_ROC 0.9622 |  testAUCpr 0.8036 
+Epoch 520 | Loss 6.8148 | TrainAUC 0.9872 | testAUC_ROC 0.9646 |  testAUCpr 0.8192 
+Epoch 530 | Loss 6.7655 | TrainAUC 0.9879 | testAUC_ROC 0.9622 |  testAUCpr 0.8050 
+Epoch 540 | Loss 6.7544 | TrainAUC 0.9882 | testAUC_ROC 0.9665 |  testAUCpr 0.8315 
+Epoch 550 | Loss 6.7736 | TrainAUC 0.9877 | testAUC_ROC 0.9646 |  testAUCpr 0.8215 
+Epoch 560 | Loss 6.7433 | TrainAUC 0.9884 | testAUC_ROC 0.9660 |  testAUCpr 0.8294 
+Epoch 570 | Loss 6.7446 | TrainAUC 0.9883 | testAUC_ROC 0.9650 |  testAUCpr 0.8236 
+Epoch 580 | Loss 6.7715 | TrainAUC 0.9883 | testAUC_ROC 0.9667 |  testAUCpr 0.8299 
+Epoch 590 | Loss 6.7221 | TrainAUC 0.9888 | testAUC_ROC 0.9677 |  testAUCpr 0.8315 
+Epoch 600 | Loss 6.7148 | TrainAUC 0.9893 | testAUC_ROC 0.9677 |  testAUCpr 0.8381 
+Epoch 600 - Average weights - PM:0.303, PP:0.182, PF:0.514
+Epoch 610 | Loss 6.7025 | TrainAUC 0.9889 | testAUC_ROC 0.9681 |  testAUCpr 0.8325 
+Epoch 620 | Loss 6.6847 | TrainAUC 0.9892 | testAUC_ROC 0.9685 |  testAUCpr 0.8397 
+Epoch 630 | Loss 6.7282 | TrainAUC 0.9893 | testAUC_ROC 0.9674 |  testAUCpr 0.8320 
+Epoch 640 | Loss 6.6730 | TrainAUC 0.9891 | testAUC_ROC 0.9682 |  testAUCpr 0.8381 
+Epoch 650 | Loss 6.6732 | TrainAUC 0.9891 | testAUC_ROC 0.9695 |  testAUCpr 0.8409 
+Epoch 660 | Loss 6.6366 | TrainAUC 0.9898 | testAUC_ROC 0.9709 |  testAUCpr 0.8532 
+Epoch 670 | Loss 6.6397 | TrainAUC 0.9896 | testAUC_ROC 0.9682 |  testAUCpr 0.8400 
+Epoch 680 | Loss 6.6537 | TrainAUC 0.9896 | testAUC_ROC 0.9694 |  testAUCpr 0.8468 
+Epoch 690 | Loss 6.6367 | TrainAUC 0.9899 | testAUC_ROC 0.9709 |  testAUCpr 0.8534 
+Epoch 700 | Loss 6.6138 | TrainAUC 0.9899 | testAUC_ROC 0.9709 |  testAUCpr 0.8486 
+Epoch 700 - Average weights - PM:0.304, PP:0.182, PF:0.513
+Epoch 710 | Loss 6.6672 | TrainAUC 0.9896 | testAUC_ROC 0.9711 |  testAUCpr 0.8532 
+Epoch 720 | Loss 6.6157 | TrainAUC 0.9906 | testAUC_ROC 0.9713 |  testAUCpr 0.8543 
+Epoch 730 | Loss 6.5906 | TrainAUC 0.9905 | testAUC_ROC 0.9708 |  testAUCpr 0.8513 
+Epoch 740 | Loss 6.5978 | TrainAUC 0.9905 | testAUC_ROC 0.9719 |  testAUCpr 0.8592 
+Epoch 750 | Loss 6.5690 | TrainAUC 0.9905 | testAUC_ROC 0.9720 |  testAUCpr 0.8609 
+Epoch 760 | Loss 6.5719 | TrainAUC 0.9907 | testAUC_ROC 0.9720 |  testAUCpr 0.8613 
+Epoch 770 | Loss 6.5472 | TrainAUC 0.9909 | testAUC_ROC 0.9716 |  testAUCpr 0.8551 
+Epoch 780 | Loss 6.5653 | TrainAUC 0.9906 | testAUC_ROC 0.9729 |  testAUCpr 0.8647 
+Epoch 790 | Loss 6.5946 | TrainAUC 0.9898 | testAUC_ROC 0.9736 |  testAUCpr 0.8692 
+Epoch 800 | Loss 6.5609 | TrainAUC 0.9907 | testAUC_ROC 0.9722 |  testAUCpr 0.8616 
+Epoch 800 - Average weights - PM:0.304, PP:0.182, PF:0.514
+Epoch 810 | Loss 6.5392 | TrainAUC 0.9913 | testAUC_ROC 0.9730 |  testAUCpr 0.8639 
+Epoch 820 | Loss 6.5350 | TrainAUC 0.9912 | testAUC_ROC 0.9722 |  testAUCpr 0.8630 
+Epoch 830 | Loss 6.5262 | TrainAUC 0.9911 | testAUC_ROC 0.9728 |  testAUCpr 0.8674 
+Epoch 840 | Loss 6.5131 | TrainAUC 0.9914 | testAUC_ROC 0.9726 |  testAUCpr 0.8680 
+Epoch 850 | Loss 6.5497 | TrainAUC 0.9912 | testAUC_ROC 0.9734 |  testAUCpr 0.8663 
+Epoch 860 | Loss 6.5061 | TrainAUC 0.9914 | testAUC_ROC 0.9743 |  testAUCpr 0.8762 
+Epoch 870 | Loss 6.4914 | TrainAUC 0.9918 | testAUC_ROC 0.9738 |  testAUCpr 0.8734 
+Epoch 880 | Loss 6.4977 | TrainAUC 0.9912 | testAUC_ROC 0.9748 |  testAUCpr 0.8742 
+Epoch 890 | Loss 6.4739 | TrainAUC 0.9919 | testAUC_ROC 0.9741 |  testAUCpr 0.8706 
+Epoch 900 | Loss 6.4862 | TrainAUC 0.9916 | testAUC_ROC 0.9754 |  testAUCpr 0.8776 
+Epoch 900 - Average weights - PM:0.328, PP:0.183, PF:0.489
+Epoch 910 | Loss 6.4900 | TrainAUC 0.9919 | testAUC_ROC 0.9746 |  testAUCpr 0.8749 
+Epoch 920 | Loss 6.4820 | TrainAUC 0.9920 | testAUC_ROC 0.9753 |  testAUCpr 0.8744 
+Epoch 930 | Loss 6.4430 | TrainAUC 0.9919 | testAUC_ROC 0.9754 |  testAUCpr 0.8789 
+Epoch 940 | Loss 6.4636 | TrainAUC 0.9917 | testAUC_ROC 0.9753 |  testAUCpr 0.8781 
+Epoch 950 | Loss 6.4725 | TrainAUC 0.9919 | testAUC_ROC 0.9750 |  testAUCpr 0.8780 
+Epoch 960 | Loss 6.4340 | TrainAUC 0.9921 | testAUC_ROC 0.9755 |  testAUCpr 0.8802 
+Epoch 970 | Loss 6.4320 | TrainAUC 0.9922 | testAUC_ROC 0.9755 |  testAUCpr 0.8814 
+Epoch 980 | Loss 6.4096 | TrainAUC 0.9926 | testAUC_ROC 0.9755 |  testAUCpr 0.8805 
+Epoch 990 | Loss 6.4198 | TrainAUC 0.9924 | testAUC_ROC 0.9743 |  testAUCpr 0.8786 
+Epoch 1000 | Loss 6.4211 | TrainAUC 0.9922 | testAUC_ROC 0.9751 |  testAUCpr 0.8800 
+Load model result: Epoch 957 testAUC_ROC 0.9767 |  testAUCpr 0.8838 
+2-th random split with training ratio 0.900000
+Epoch 001 | Loss 17.1671 | TrainAUC 0.5355 | testAUC_ROC 0.4800 |  testAUCpr 0.0859 
+Epoch 010 | Loss 11.9395 | TrainAUC 0.7419 | testAUC_ROC 0.8065 |  testAUCpr 0.2815 
+Epoch 020 | Loss 10.8061 | TrainAUC 0.8980 | testAUC_ROC 0.8862 |  testAUCpr 0.4119 
+Epoch 030 | Loss 10.3156 | TrainAUC 0.9159 | testAUC_ROC 0.8996 |  testAUCpr 0.4634 
+Epoch 040 | Loss 9.8175 | TrainAUC 0.9322 | testAUC_ROC 0.9080 |  testAUCpr 0.4779 
+Epoch 050 | Loss 9.3458 | TrainAUC 0.9529 | testAUC_ROC 0.9194 |  testAUCpr 0.5278 
+Epoch 060 | Loss 9.0820 | TrainAUC 0.9546 | testAUC_ROC 0.9134 |  testAUCpr 0.5021 
+Epoch 070 | Loss 8.8635 | TrainAUC 0.9593 | testAUC_ROC 0.9166 |  testAUCpr 0.5251 
+Epoch 080 | Loss 8.6598 | TrainAUC 0.9601 | testAUC_ROC 0.9196 |  testAUCpr 0.5465 
+Epoch 090 | Loss 8.5054 | TrainAUC 0.9636 | testAUC_ROC 0.9241 |  testAUCpr 0.5742 
+Epoch 100 | Loss 8.3524 | TrainAUC 0.9644 | testAUC_ROC 0.9243 |  testAUCpr 0.5026 
+Epoch 100 - Average weights - PM:0.305, PP:0.182, PF:0.513
+Epoch 110 | Loss 8.2493 | TrainAUC 0.9654 | testAUC_ROC 0.9226 |  testAUCpr 0.5520 
+Epoch 120 | Loss 8.1229 | TrainAUC 0.9661 | testAUC_ROC 0.9272 |  testAUCpr 0.5840 
+Epoch 130 | Loss 8.0924 | TrainAUC 0.9665 | testAUC_ROC 0.9261 |  testAUCpr 0.5807 
+Epoch 140 | Loss 8.0027 | TrainAUC 0.9686 | testAUC_ROC 0.9308 |  testAUCpr 0.6057 
+Epoch 150 | Loss 7.9177 | TrainAUC 0.9688 | testAUC_ROC 0.9291 |  testAUCpr 0.5957 
+Epoch 160 | Loss 7.8514 | TrainAUC 0.9703 | testAUC_ROC 0.9300 |  testAUCpr 0.6016 
+Epoch 170 | Loss 7.8505 | TrainAUC 0.9712 | testAUC_ROC 0.9363 |  testAUCpr 0.6362 
+Epoch 180 | Loss 7.7950 | TrainAUC 0.9707 | testAUC_ROC 0.9398 |  testAUCpr 0.6628 
+Epoch 190 | Loss 7.7030 | TrainAUC 0.9724 | testAUC_ROC 0.9415 |  testAUCpr 0.6701 
+Epoch 200 | Loss 7.6486 | TrainAUC 0.9730 | testAUC_ROC 0.9376 |  testAUCpr 0.6537 
+Epoch 200 - Average weights - PM:0.305, PP:0.182, PF:0.513
+Epoch 210 | Loss 7.6113 | TrainAUC 0.9731 | testAUC_ROC 0.9415 |  testAUCpr 0.6762 
+Epoch 220 | Loss 7.6297 | TrainAUC 0.9731 | testAUC_ROC 0.9435 |  testAUCpr 0.6830 
+Epoch 230 | Loss 7.5206 | TrainAUC 0.9752 | testAUC_ROC 0.9473 |  testAUCpr 0.7049 
+Epoch 240 | Loss 7.4738 | TrainAUC 0.9758 | testAUC_ROC 0.9446 |  testAUCpr 0.6900 
+Epoch 250 | Loss 7.4660 | TrainAUC 0.9756 | testAUC_ROC 0.9434 |  testAUCpr 0.6928 
+Epoch 260 | Loss 7.4048 | TrainAUC 0.9771 | testAUC_ROC 0.9506 |  testAUCpr 0.7246 
+Epoch 270 | Loss 7.4053 | TrainAUC 0.9769 | testAUC_ROC 0.9487 |  testAUCpr 0.7130 
+Epoch 280 | Loss 7.3879 | TrainAUC 0.9769 | testAUC_ROC 0.9488 |  testAUCpr 0.7280 
+Epoch 290 | Loss 7.3217 | TrainAUC 0.9785 | testAUC_ROC 0.9541 |  testAUCpr 0.7469 
+Epoch 300 | Loss 7.3278 | TrainAUC 0.9784 | testAUC_ROC 0.9535 |  testAUCpr 0.7479 
+Epoch 300 - Average weights - PM:0.307, PP:0.182, PF:0.510
+Epoch 310 | Loss 7.2851 | TrainAUC 0.9793 | testAUC_ROC 0.9520 |  testAUCpr 0.7399 
+Epoch 320 | Loss 7.3045 | TrainAUC 0.9791 | testAUC_ROC 0.9544 |  testAUCpr 0.7471 
+Epoch 330 | Loss 7.2205 | TrainAUC 0.9799 | testAUC_ROC 0.9555 |  testAUCpr 0.7522 
+Epoch 340 | Loss 7.1676 | TrainAUC 0.9811 | testAUC_ROC 0.9569 |  testAUCpr 0.7652 
+Epoch 350 | Loss 7.1795 | TrainAUC 0.9807 | testAUC_ROC 0.9587 |  testAUCpr 0.7783 
+Epoch 360 | Loss 7.1355 | TrainAUC 0.9817 | testAUC_ROC 0.9573 |  testAUCpr 0.7659 
+Epoch 370 | Loss 7.1499 | TrainAUC 0.9814 | testAUC_ROC 0.9597 |  testAUCpr 0.7857 
+Epoch 380 | Loss 7.1077 | TrainAUC 0.9820 | testAUC_ROC 0.9598 |  testAUCpr 0.7831 
+Epoch 390 | Loss 7.0962 | TrainAUC 0.9823 | testAUC_ROC 0.9599 |  testAUCpr 0.7867 
+Epoch 400 | Loss 7.1174 | TrainAUC 0.9821 | testAUC_ROC 0.9599 |  testAUCpr 0.7876 
+Epoch 400 - Average weights - PM:0.309, PP:0.182, PF:0.508
+Epoch 410 | Loss 7.0640 | TrainAUC 0.9828 | testAUC_ROC 0.9586 |  testAUCpr 0.7823 
+Epoch 420 | Loss 7.0333 | TrainAUC 0.9832 | testAUC_ROC 0.9627 |  testAUCpr 0.8034 
+Epoch 430 | Loss 7.0317 | TrainAUC 0.9837 | testAUC_ROC 0.9606 |  testAUCpr 0.7866 
+Epoch 440 | Loss 7.0009 | TrainAUC 0.9838 | testAUC_ROC 0.9620 |  testAUCpr 0.7953 
+Epoch 450 | Loss 7.0249 | TrainAUC 0.9841 | testAUC_ROC 0.9604 |  testAUCpr 0.7864 
+Epoch 460 | Loss 6.9732 | TrainAUC 0.9841 | testAUC_ROC 0.9633 |  testAUCpr 0.8053 
+Epoch 470 | Loss 6.9622 | TrainAUC 0.9846 | testAUC_ROC 0.9595 |  testAUCpr 0.7860 
+Epoch 480 | Loss 6.9125 | TrainAUC 0.9850 | testAUC_ROC 0.9636 |  testAUCpr 0.8080 
+Epoch 490 | Loss 6.9437 | TrainAUC 0.9847 | testAUC_ROC 0.9640 |  testAUCpr 0.8072 
+Epoch 500 | Loss 6.9248 | TrainAUC 0.9852 | testAUC_ROC 0.9634 |  testAUCpr 0.8064 
+Epoch 500 - Average weights - PM:0.312, PP:0.182, PF:0.506
+Epoch 510 | Loss 6.8908 | TrainAUC 0.9851 | testAUC_ROC 0.9652 |  testAUCpr 0.8175 
+Epoch 520 | Loss 6.9326 | TrainAUC 0.9848 | testAUC_ROC 0.9652 |  testAUCpr 0.8144 
+Epoch 530 | Loss 6.8971 | TrainAUC 0.9853 | testAUC_ROC 0.9649 |  testAUCpr 0.8084 
+Epoch 540 | Loss 6.8458 | TrainAUC 0.9859 | testAUC_ROC 0.9641 |  testAUCpr 0.8084 
+Epoch 550 | Loss 6.8289 | TrainAUC 0.9862 | testAUC_ROC 0.9663 |  testAUCpr 0.8220 
+Epoch 560 | Loss 6.8489 | TrainAUC 0.9859 | testAUC_ROC 0.9658 |  testAUCpr 0.8176 
+Epoch 570 | Loss 6.8210 | TrainAUC 0.9863 | testAUC_ROC 0.9672 |  testAUCpr 0.8239 
+Epoch 580 | Loss 6.7999 | TrainAUC 0.9867 | testAUC_ROC 0.9669 |  testAUCpr 0.8221 
+Epoch 590 | Loss 6.7833 | TrainAUC 0.9872 | testAUC_ROC 0.9680 |  testAUCpr 0.8302 
+Epoch 600 | Loss 6.7918 | TrainAUC 0.9867 | testAUC_ROC 0.9676 |  testAUCpr 0.8256 
+Epoch 600 - Average weights - PM:0.314, PP:0.182, PF:0.504
+Epoch 610 | Loss 6.7958 | TrainAUC 0.9870 | testAUC_ROC 0.9683 |  testAUCpr 0.8324 
+Epoch 620 | Loss 6.7755 | TrainAUC 0.9873 | testAUC_ROC 0.9686 |  testAUCpr 0.8316 
+Epoch 630 | Loss 6.7727 | TrainAUC 0.9872 | testAUC_ROC 0.9692 |  testAUCpr 0.8352 
+Epoch 640 | Loss 6.7517 | TrainAUC 0.9878 | testAUC_ROC 0.9690 |  testAUCpr 0.8324 
+Epoch 650 | Loss 6.7221 | TrainAUC 0.9878 | testAUC_ROC 0.9703 |  testAUCpr 0.8431 
+Epoch 660 | Loss 6.7367 | TrainAUC 0.9877 | testAUC_ROC 0.9684 |  testAUCpr 0.8362 
+Epoch 670 | Loss 6.7303 | TrainAUC 0.9882 | testAUC_ROC 0.9711 |  testAUCpr 0.8480 
+Epoch 680 | Loss 6.7140 | TrainAUC 0.9881 | testAUC_ROC 0.9717 |  testAUCpr 0.8504 
+Epoch 690 | Loss 6.7091 | TrainAUC 0.9882 | testAUC_ROC 0.9704 |  testAUCpr 0.8462 
+Epoch 700 | Loss 6.6986 | TrainAUC 0.9885 | testAUC_ROC 0.9705 |  testAUCpr 0.8510 
+Epoch 700 - Average weights - PM:0.320, PP:0.183, PF:0.498
+Epoch 710 | Loss 6.7151 | TrainAUC 0.9884 | testAUC_ROC 0.9715 |  testAUCpr 0.8509 
+Epoch 720 | Loss 6.6582 | TrainAUC 0.9887 | testAUC_ROC 0.9720 |  testAUCpr 0.8568 
+Epoch 730 | Loss 6.6842 | TrainAUC 0.9886 | testAUC_ROC 0.9715 |  testAUCpr 0.8516 
+Epoch 740 | Loss 6.6464 | TrainAUC 0.9890 | testAUC_ROC 0.9728 |  testAUCpr 0.8529 
+Epoch 750 | Loss 6.6496 | TrainAUC 0.9887 | testAUC_ROC 0.9734 |  testAUCpr 0.8598 
+Epoch 760 | Loss 6.6812 | TrainAUC 0.9887 | testAUC_ROC 0.9726 |  testAUCpr 0.8549 
+Epoch 770 | Loss 6.6369 | TrainAUC 0.9891 | testAUC_ROC 0.9726 |  testAUCpr 0.8573 
+Epoch 780 | Loss 6.6114 | TrainAUC 0.9895 | testAUC_ROC 0.9739 |  testAUCpr 0.8641 
+Epoch 790 | Loss 6.6058 | TrainAUC 0.9893 | testAUC_ROC 0.9737 |  testAUCpr 0.8645 
+Epoch 800 | Loss 6.5994 | TrainAUC 0.9898 | testAUC_ROC 0.9735 |  testAUCpr 0.8608 
+Epoch 800 - Average weights - PM:0.319, PP:0.183, PF:0.498
+Epoch 810 | Loss 6.6185 | TrainAUC 0.9895 | testAUC_ROC 0.9743 |  testAUCpr 0.8641 
+Epoch 820 | Loss 6.6098 | TrainAUC 0.9898 | testAUC_ROC 0.9733 |  testAUCpr 0.8646 
+Epoch 830 | Loss 6.5973 | TrainAUC 0.9896 | testAUC_ROC 0.9740 |  testAUCpr 0.8654 
+Epoch 840 | Loss 6.5665 | TrainAUC 0.9904 | testAUC_ROC 0.9739 |  testAUCpr 0.8627 
+Epoch 850 | Loss 6.5629 | TrainAUC 0.9902 | testAUC_ROC 0.9754 |  testAUCpr 0.8722 
+Epoch 860 | Loss 6.5875 | TrainAUC 0.9899 | testAUC_ROC 0.9738 |  testAUCpr 0.8656 
+Epoch 870 | Loss 6.5666 | TrainAUC 0.9902 | testAUC_ROC 0.9735 |  testAUCpr 0.8635 
+Epoch 880 | Loss 6.5238 | TrainAUC 0.9905 | testAUC_ROC 0.9753 |  testAUCpr 0.8690 
+Epoch 890 | Loss 6.5316 | TrainAUC 0.9909 | testAUC_ROC 0.9752 |  testAUCpr 0.8710 
+Epoch 900 | Loss 6.5466 | TrainAUC 0.9903 | testAUC_ROC 0.9754 |  testAUCpr 0.8718 
+Epoch 900 - Average weights - PM:0.322, PP:0.182, PF:0.496
+Epoch 910 | Loss 6.5528 | TrainAUC 0.9906 | testAUC_ROC 0.9757 |  testAUCpr 0.8756 
+Epoch 920 | Loss 6.4910 | TrainAUC 0.9912 | testAUC_ROC 0.9764 |  testAUCpr 0.8776 
+Epoch 930 | Loss 6.5110 | TrainAUC 0.9909 | testAUC_ROC 0.9762 |  testAUCpr 0.8759 
+Epoch 940 | Loss 6.5090 | TrainAUC 0.9911 | testAUC_ROC 0.9769 |  testAUCpr 0.8805 
+Epoch 950 | Loss 6.4839 | TrainAUC 0.9913 | testAUC_ROC 0.9759 |  testAUCpr 0.8787 
+Epoch 960 | Loss 6.5113 | TrainAUC 0.9911 | testAUC_ROC 0.9766 |  testAUCpr 0.8782 
+Epoch 970 | Loss 6.4935 | TrainAUC 0.9910 | testAUC_ROC 0.9756 |  testAUCpr 0.8761 
+Epoch 980 | Loss 6.4764 | TrainAUC 0.9911 | testAUC_ROC 0.9765 |  testAUCpr 0.8821 
+Epoch 990 | Loss 6.4682 | TrainAUC 0.9914 | testAUC_ROC 0.9776 |  testAUCpr 0.8856 
+Epoch 1000 | Loss 6.4754 | TrainAUC 0.9916 | testAUC_ROC 0.9772 |  testAUCpr 0.8813 
+Load model result: Epoch 990 testAUC_ROC 0.9776 |  testAUCpr 0.8856 
+3-th random split with training ratio 0.900000
+Epoch 001 | Loss 16.4524 | TrainAUC 0.4850 | testAUC_ROC 0.5328 |  testAUCpr 0.1148 
+Epoch 010 | Loss 11.5961 | TrainAUC 0.8028 | testAUC_ROC 0.8607 |  testAUCpr 0.3903 
+Epoch 020 | Loss 10.5998 | TrainAUC 0.9086 | testAUC_ROC 0.9000 |  testAUCpr 0.4626 
+Epoch 030 | Loss 9.9673 | TrainAUC 0.9415 | testAUC_ROC 0.9141 |  testAUCpr 0.4994 
+Epoch 040 | Loss 9.4830 | TrainAUC 0.9547 | testAUC_ROC 0.9245 |  testAUCpr 0.5353 
+Epoch 050 | Loss 9.0637 | TrainAUC 0.9597 | testAUC_ROC 0.9253 |  testAUCpr 0.5771 
+Epoch 060 | Loss 8.8072 | TrainAUC 0.9599 | testAUC_ROC 0.9204 |  testAUCpr 0.5528 
+Epoch 070 | Loss 8.5569 | TrainAUC 0.9628 | testAUC_ROC 0.9280 |  testAUCpr 0.6012 
+Epoch 080 | Loss 8.3490 | TrainAUC 0.9647 | testAUC_ROC 0.9273 |  testAUCpr 0.5968 
+Epoch 090 | Loss 8.2216 | TrainAUC 0.9660 | testAUC_ROC 0.9224 |  testAUCpr 0.5751 
+Epoch 100 | Loss 8.1151 | TrainAUC 0.9668 | testAUC_ROC 0.9252 |  testAUCpr 0.5981 
+Epoch 100 - Average weights - PM:0.306, PP:0.182, PF:0.512
+Epoch 110 | Loss 8.0054 | TrainAUC 0.9676 | testAUC_ROC 0.9258 |  testAUCpr 0.6045 
+Epoch 120 | Loss 7.9112 | TrainAUC 0.9691 | testAUC_ROC 0.9292 |  testAUCpr 0.6190 
+Epoch 130 | Loss 7.8478 | TrainAUC 0.9702 | testAUC_ROC 0.9258 |  testAUCpr 0.6049 
+Epoch 140 | Loss 7.7961 | TrainAUC 0.9706 | testAUC_ROC 0.9288 |  testAUCpr 0.6268 
+Epoch 150 | Loss 7.7128 | TrainAUC 0.9717 | testAUC_ROC 0.9323 |  testAUCpr 0.6425 
+Epoch 160 | Loss 7.6656 | TrainAUC 0.9721 | testAUC_ROC 0.9367 |  testAUCpr 0.6616 
+Epoch 170 | Loss 7.6783 | TrainAUC 0.9715 | testAUC_ROC 0.9372 |  testAUCpr 0.6693 
+Epoch 180 | Loss 7.5851 | TrainAUC 0.9739 | testAUC_ROC 0.9415 |  testAUCpr 0.6901 
+Epoch 190 | Loss 7.4903 | TrainAUC 0.9748 | testAUC_ROC 0.9351 |  testAUCpr 0.6593 
+Epoch 200 | Loss 7.4694 | TrainAUC 0.9739 | testAUC_ROC 0.9367 |  testAUCpr 0.6653 
+Epoch 200 - Average weights - PM:0.305, PP:0.182, PF:0.512
+Epoch 210 | Loss 7.4179 | TrainAUC 0.9757 | testAUC_ROC 0.9439 |  testAUCpr 0.7005 
+Epoch 220 | Loss 7.3619 | TrainAUC 0.9769 | testAUC_ROC 0.9435 |  testAUCpr 0.6984 
+Epoch 230 | Loss 7.3376 | TrainAUC 0.9773 | testAUC_ROC 0.9471 |  testAUCpr 0.7225 
+Epoch 240 | Loss 7.3042 | TrainAUC 0.9779 | testAUC_ROC 0.9482 |  testAUCpr 0.7321 
+Epoch 250 | Loss 7.2724 | TrainAUC 0.9790 | testAUC_ROC 0.9503 |  testAUCpr 0.7500 
+Epoch 260 | Loss 7.2647 | TrainAUC 0.9792 | testAUC_ROC 0.9528 |  testAUCpr 0.7495 
+Epoch 270 | Loss 7.2515 | TrainAUC 0.9790 | testAUC_ROC 0.9538 |  testAUCpr 0.7597 
+Epoch 280 | Loss 7.1429 | TrainAUC 0.9808 | testAUC_ROC 0.9526 |  testAUCpr 0.7655 
+Epoch 290 | Loss 7.1223 | TrainAUC 0.9811 | testAUC_ROC 0.9497 |  testAUCpr 0.7450 
+Epoch 300 | Loss 7.1163 | TrainAUC 0.9807 | testAUC_ROC 0.9497 |  testAUCpr 0.7437 
+Epoch 300 - Average weights - PM:0.305, PP:0.182, PF:0.512
+Epoch 310 | Loss 7.0857 | TrainAUC 0.9817 | testAUC_ROC 0.9571 |  testAUCpr 0.7777 
+Epoch 320 | Loss 7.0799 | TrainAUC 0.9825 | testAUC_ROC 0.9569 |  testAUCpr 0.7859 
+Epoch 330 | Loss 7.0541 | TrainAUC 0.9830 | testAUC_ROC 0.9545 |  testAUCpr 0.7800 
+Epoch 340 | Loss 7.0504 | TrainAUC 0.9826 | testAUC_ROC 0.9553 |  testAUCpr 0.7728 
+Epoch 350 | Loss 7.0157 | TrainAUC 0.9832 | testAUC_ROC 0.9569 |  testAUCpr 0.7847 
+Epoch 360 | Loss 7.0030 | TrainAUC 0.9835 | testAUC_ROC 0.9613 |  testAUCpr 0.8011 
+Epoch 370 | Loss 6.9826 | TrainAUC 0.9837 | testAUC_ROC 0.9591 |  testAUCpr 0.7984 
+Epoch 380 | Loss 6.9386 | TrainAUC 0.9845 | testAUC_ROC 0.9606 |  testAUCpr 0.8021 
+Epoch 390 | Loss 6.9375 | TrainAUC 0.9846 | testAUC_ROC 0.9623 |  testAUCpr 0.8079 
+Epoch 400 | Loss 6.9067 | TrainAUC 0.9852 | testAUC_ROC 0.9621 |  testAUCpr 0.8107 
+Epoch 400 - Average weights - PM:0.305, PP:0.182, PF:0.513
+Epoch 410 | Loss 6.8925 | TrainAUC 0.9853 | testAUC_ROC 0.9626 |  testAUCpr 0.8146 
+Epoch 420 | Loss 6.8732 | TrainAUC 0.9855 | testAUC_ROC 0.9612 |  testAUCpr 0.8023 
+Epoch 430 | Loss 6.8267 | TrainAUC 0.9862 | testAUC_ROC 0.9615 |  testAUCpr 0.8082 
+Epoch 440 | Loss 6.8623 | TrainAUC 0.9861 | testAUC_ROC 0.9641 |  testAUCpr 0.8161 
+Epoch 450 | Loss 6.8058 | TrainAUC 0.9867 | testAUC_ROC 0.9620 |  testAUCpr 0.8136 
+Epoch 460 | Loss 6.8091 | TrainAUC 0.9866 | testAUC_ROC 0.9655 |  testAUCpr 0.8221 
+Epoch 470 | Loss 6.7708 | TrainAUC 0.9875 | testAUC_ROC 0.9651 |  testAUCpr 0.8295 
+Epoch 480 | Loss 6.7976 | TrainAUC 0.9876 | testAUC_ROC 0.9613 |  testAUCpr 0.8036 
+Epoch 490 | Loss 6.7331 | TrainAUC 0.9879 | testAUC_ROC 0.9659 |  testAUCpr 0.8258 
+Epoch 500 | Loss 6.7376 | TrainAUC 0.9882 | testAUC_ROC 0.9663 |  testAUCpr 0.8316 
+Epoch 500 - Average weights - PM:0.307, PP:0.182, PF:0.511
+Epoch 510 | Loss 6.7092 | TrainAUC 0.9884 | testAUC_ROC 0.9688 |  testAUCpr 0.8430 
+Epoch 520 | Loss 6.7039 | TrainAUC 0.9888 | testAUC_ROC 0.9674 |  testAUCpr 0.8366 
+Epoch 530 | Loss 6.7261 | TrainAUC 0.9878 | testAUC_ROC 0.9676 |  testAUCpr 0.8401 
+Epoch 540 | Loss 6.7183 | TrainAUC 0.9882 | testAUC_ROC 0.9689 |  testAUCpr 0.8478 
+Epoch 550 | Loss 6.6974 | TrainAUC 0.9886 | testAUC_ROC 0.9694 |  testAUCpr 0.8402 
+Epoch 560 | Loss 6.6867 | TrainAUC 0.9883 | testAUC_ROC 0.9678 |  testAUCpr 0.8456 
+Epoch 570 | Loss 6.6413 | TrainAUC 0.9892 | testAUC_ROC 0.9690 |  testAUCpr 0.8480 
+Epoch 580 | Loss 6.6586 | TrainAUC 0.9892 | testAUC_ROC 0.9674 |  testAUCpr 0.8387 
+Epoch 590 | Loss 6.6433 | TrainAUC 0.9899 | testAUC_ROC 0.9703 |  testAUCpr 0.8498 
+Epoch 600 | Loss 6.6009 | TrainAUC 0.9900 | testAUC_ROC 0.9711 |  testAUCpr 0.8523 
+Epoch 600 - Average weights - PM:0.311, PP:0.182, PF:0.507
+Epoch 610 | Loss 6.6197 | TrainAUC 0.9902 | testAUC_ROC 0.9707 |  testAUCpr 0.8554 
+Epoch 620 | Loss 6.5990 | TrainAUC 0.9899 | testAUC_ROC 0.9723 |  testAUCpr 0.8586 
+Epoch 630 | Loss 6.6033 | TrainAUC 0.9902 | testAUC_ROC 0.9714 |  testAUCpr 0.8588 
+Epoch 640 | Loss 6.5688 | TrainAUC 0.9903 | testAUC_ROC 0.9720 |  testAUCpr 0.8593 
+Epoch 650 | Loss 6.5661 | TrainAUC 0.9908 | testAUC_ROC 0.9709 |  testAUCpr 0.8578 
+Epoch 660 | Loss 6.5640 | TrainAUC 0.9906 | testAUC_ROC 0.9702 |  testAUCpr 0.8576 
+Epoch 670 | Loss 6.5881 | TrainAUC 0.9904 | testAUC_ROC 0.9706 |  testAUCpr 0.8600 
+Epoch 680 | Loss 6.5610 | TrainAUC 0.9904 | testAUC_ROC 0.9725 |  testAUCpr 0.8639 
+Epoch 690 | Loss 6.5578 | TrainAUC 0.9906 | testAUC_ROC 0.9723 |  testAUCpr 0.8591 
+Epoch 700 | Loss 6.5370 | TrainAUC 0.9907 | testAUC_ROC 0.9709 |  testAUCpr 0.8582 
+Epoch 700 - Average weights - PM:0.320, PP:0.183, PF:0.497
+Epoch 710 | Loss 6.4952 | TrainAUC 0.9914 | testAUC_ROC 0.9702 |  testAUCpr 0.8590 
+Epoch 720 | Loss 6.4858 | TrainAUC 0.9913 | testAUC_ROC 0.9736 |  testAUCpr 0.8726 
+Epoch 730 | Loss 6.4855 | TrainAUC 0.9913 | testAUC_ROC 0.9715 |  testAUCpr 0.8670 
+Epoch 740 | Loss 6.4624 | TrainAUC 0.9920 | testAUC_ROC 0.9741 |  testAUCpr 0.8726 
+Epoch 750 | Loss 6.4888 | TrainAUC 0.9919 | testAUC_ROC 0.9708 |  testAUCpr 0.8637 
+Epoch 760 | Loss 6.4704 | TrainAUC 0.9915 | testAUC_ROC 0.9736 |  testAUCpr 0.8738 
+Epoch 770 | Loss 6.5003 | TrainAUC 0.9911 | testAUC_ROC 0.9739 |  testAUCpr 0.8729 
+Epoch 780 | Loss 6.4770 | TrainAUC 0.9914 | testAUC_ROC 0.9734 |  testAUCpr 0.8712 
+Epoch 790 | Loss 6.4227 | TrainAUC 0.9921 | testAUC_ROC 0.9750 |  testAUCpr 0.8770 
+Epoch 800 | Loss 6.4433 | TrainAUC 0.9923 | testAUC_ROC 0.9722 |  testAUCpr 0.8673 
+Epoch 800 - Average weights - PM:0.341, PP:0.184, PF:0.475
+Epoch 810 | Loss 6.4539 | TrainAUC 0.9919 | testAUC_ROC 0.9742 |  testAUCpr 0.8743 
+Epoch 820 | Loss 6.4315 | TrainAUC 0.9920 | testAUC_ROC 0.9755 |  testAUCpr 0.8768 
+Epoch 830 | Loss 6.4248 | TrainAUC 0.9922 | testAUC_ROC 0.9731 |  testAUCpr 0.8699 
+Epoch 840 | Loss 6.4185 | TrainAUC 0.9922 | testAUC_ROC 0.9740 |  testAUCpr 0.8690 
+Epoch 850 | Loss 6.4039 | TrainAUC 0.9924 | testAUC_ROC 0.9728 |  testAUCpr 0.8700 
+Epoch 860 | Loss 6.4027 | TrainAUC 0.9928 | testAUC_ROC 0.9748 |  testAUCpr 0.8792 
+Epoch 870 | Loss 6.3913 | TrainAUC 0.9925 | testAUC_ROC 0.9761 |  testAUCpr 0.8814 
+Epoch 880 | Loss 6.4092 | TrainAUC 0.9925 | testAUC_ROC 0.9733 |  testAUCpr 0.8779 
+Epoch 890 | Loss 6.4012 | TrainAUC 0.9925 | testAUC_ROC 0.9739 |  testAUCpr 0.8775 
+Epoch 900 | Loss 6.4084 | TrainAUC 0.9923 | testAUC_ROC 0.9766 |  testAUCpr 0.8878 
+Epoch 900 - Average weights - PM:0.347, PP:0.184, PF:0.469
+Epoch 910 | Loss 6.4056 | TrainAUC 0.9926 | testAUC_ROC 0.9761 |  testAUCpr 0.8826 
+Epoch 920 | Loss 6.3644 | TrainAUC 0.9932 | testAUC_ROC 0.9755 |  testAUCpr 0.8808 
+Epoch 930 | Loss 6.3450 | TrainAUC 0.9933 | testAUC_ROC 0.9748 |  testAUCpr 0.8806 
+Epoch 940 | Loss 6.3252 | TrainAUC 0.9933 | testAUC_ROC 0.9746 |  testAUCpr 0.8792 
+Epoch 950 | Loss 6.3285 | TrainAUC 0.9932 | testAUC_ROC 0.9744 |  testAUCpr 0.8761 
+Epoch 960 | Loss 6.3347 | TrainAUC 0.9931 | testAUC_ROC 0.9746 |  testAUCpr 0.8814 
+Epoch 970 | Loss 6.3318 | TrainAUC 0.9933 | testAUC_ROC 0.9744 |  testAUCpr 0.8847 
+Epoch 980 | Loss 6.3348 | TrainAUC 0.9932 | testAUC_ROC 0.9747 |  testAUCpr 0.8858 
+Epoch 990 | Loss 6.3367 | TrainAUC 0.9933 | testAUC_ROC 0.9741 |  testAUCpr 0.8873 
+Epoch 1000 | Loss 6.3113 | TrainAUC 0.9936 | testAUC_ROC 0.9756 |  testAUCpr 0.8872 
+Load model result: Epoch 976 testAUC_ROC 0.9773 |  testAUCpr 0.8897 
+4-th random split with training ratio 0.900000
+Epoch 001 | Loss 17.4805 | TrainAUC 0.5482 | testAUC_ROC 0.5076 |  testAUCpr 0.0943 
+Epoch 010 | Loss 12.2048 | TrainAUC 0.6971 | testAUC_ROC 0.7461 |  testAUCpr 0.3158 
+Epoch 020 | Loss 10.8632 | TrainAUC 0.9020 | testAUC_ROC 0.8985 |  testAUCpr 0.4805 
+Epoch 030 | Loss 10.2198 | TrainAUC 0.9344 | testAUC_ROC 0.9152 |  testAUCpr 0.5273 
+Epoch 040 | Loss 9.6727 | TrainAUC 0.9514 | testAUC_ROC 0.9195 |  testAUCpr 0.5600 
+Epoch 050 | Loss 9.3198 | TrainAUC 0.9553 | testAUC_ROC 0.9187 |  testAUCpr 0.5529 
+Epoch 060 | Loss 9.0130 | TrainAUC 0.9582 | testAUC_ROC 0.9180 |  testAUCpr 0.5380 
+Epoch 070 | Loss 8.7249 | TrainAUC 0.9599 | testAUC_ROC 0.9246 |  testAUCpr 0.5730 
+Epoch 080 | Loss 8.4987 | TrainAUC 0.9618 | testAUC_ROC 0.9240 |  testAUCpr 0.5806 
+Epoch 090 | Loss 8.3467 | TrainAUC 0.9648 | testAUC_ROC 0.9244 |  testAUCpr 0.5908 
+Epoch 100 | Loss 8.2399 | TrainAUC 0.9665 | testAUC_ROC 0.9333 |  testAUCpr 0.6414 
+Epoch 100 - Average weights - PM:0.305, PP:0.182, PF:0.512
+Epoch 110 | Loss 8.0913 | TrainAUC 0.9673 | testAUC_ROC 0.9333 |  testAUCpr 0.6360 
+Epoch 120 | Loss 8.0238 | TrainAUC 0.9685 | testAUC_ROC 0.9301 |  testAUCpr 0.6292 
+Epoch 130 | Loss 7.9643 | TrainAUC 0.9698 | testAUC_ROC 0.9379 |  testAUCpr 0.6828 
+Epoch 140 | Loss 7.8850 | TrainAUC 0.9694 | testAUC_ROC 0.9374 |  testAUCpr 0.6663 
+Epoch 150 | Loss 7.8152 | TrainAUC 0.9706 | testAUC_ROC 0.9410 |  testAUCpr 0.6955 
+Epoch 160 | Loss 7.7434 | TrainAUC 0.9726 | testAUC_ROC 0.9386 |  testAUCpr 0.6774 
+Epoch 170 | Loss 7.7147 | TrainAUC 0.9730 | testAUC_ROC 0.9410 |  testAUCpr 0.6963 
+Epoch 180 | Loss 7.6465 | TrainAUC 0.9734 | testAUC_ROC 0.9417 |  testAUCpr 0.6893 
+Epoch 190 | Loss 7.6036 | TrainAUC 0.9743 | testAUC_ROC 0.9422 |  testAUCpr 0.6842 
+Epoch 200 | Loss 7.5786 | TrainAUC 0.9749 | testAUC_ROC 0.9470 |  testAUCpr 0.7149 
+Epoch 200 - Average weights - PM:0.305, PP:0.182, PF:0.512
+Epoch 210 | Loss 7.5358 | TrainAUC 0.9755 | testAUC_ROC 0.9474 |  testAUCpr 0.7122 
+Epoch 220 | Loss 7.5326 | TrainAUC 0.9763 | testAUC_ROC 0.9490 |  testAUCpr 0.7330 
+Epoch 230 | Loss 7.4483 | TrainAUC 0.9771 | testAUC_ROC 0.9510 |  testAUCpr 0.7345 
+Epoch 240 | Loss 7.3868 | TrainAUC 0.9784 | testAUC_ROC 0.9525 |  testAUCpr 0.7476 
+Epoch 250 | Loss 7.3467 | TrainAUC 0.9789 | testAUC_ROC 0.9506 |  testAUCpr 0.7284 
+Epoch 260 | Loss 7.3327 | TrainAUC 0.9785 | testAUC_ROC 0.9551 |  testAUCpr 0.7584 
+Epoch 270 | Loss 7.2875 | TrainAUC 0.9798 | testAUC_ROC 0.9513 |  testAUCpr 0.7462 
+Epoch 280 | Loss 7.2540 | TrainAUC 0.9797 | testAUC_ROC 0.9524 |  testAUCpr 0.7506 
+Epoch 290 | Loss 7.2467 | TrainAUC 0.9803 | testAUC_ROC 0.9544 |  testAUCpr 0.7508 
+Epoch 300 | Loss 7.1755 | TrainAUC 0.9815 | testAUC_ROC 0.9584 |  testAUCpr 0.7760 
+Epoch 300 - Average weights - PM:0.306, PP:0.182, PF:0.512
+Epoch 310 | Loss 7.1642 | TrainAUC 0.9812 | testAUC_ROC 0.9574 |  testAUCpr 0.7757 
+Epoch 320 | Loss 7.1147 | TrainAUC 0.9824 | testAUC_ROC 0.9561 |  testAUCpr 0.7671 
+Epoch 330 | Loss 7.1029 | TrainAUC 0.9823 | testAUC_ROC 0.9582 |  testAUCpr 0.7800 
+Epoch 340 | Loss 7.0831 | TrainAUC 0.9821 | testAUC_ROC 0.9578 |  testAUCpr 0.7760 
+Epoch 350 | Loss 7.0975 | TrainAUC 0.9836 | testAUC_ROC 0.9593 |  testAUCpr 0.7866 
+Epoch 360 | Loss 7.0333 | TrainAUC 0.9832 | testAUC_ROC 0.9596 |  testAUCpr 0.7781 
+Epoch 370 | Loss 7.0472 | TrainAUC 0.9838 | testAUC_ROC 0.9607 |  testAUCpr 0.7891 
+Epoch 380 | Loss 6.9814 | TrainAUC 0.9840 | testAUC_ROC 0.9606 |  testAUCpr 0.7812 
+Epoch 390 | Loss 6.9839 | TrainAUC 0.9841 | testAUC_ROC 0.9609 |  testAUCpr 0.7949 
+Epoch 400 | Loss 6.9676 | TrainAUC 0.9843 | testAUC_ROC 0.9622 |  testAUCpr 0.7912 
+Epoch 400 - Average weights - PM:0.308, PP:0.182, PF:0.510
+Epoch 410 | Loss 6.9794 | TrainAUC 0.9843 | testAUC_ROC 0.9632 |  testAUCpr 0.8025 
+Epoch 420 | Loss 6.9201 | TrainAUC 0.9851 | testAUC_ROC 0.9632 |  testAUCpr 0.8004 
+Epoch 430 | Loss 6.8904 | TrainAUC 0.9853 | testAUC_ROC 0.9637 |  testAUCpr 0.8087 
+Epoch 440 | Loss 6.9010 | TrainAUC 0.9855 | testAUC_ROC 0.9650 |  testAUCpr 0.8101 
+Epoch 450 | Loss 6.8776 | TrainAUC 0.9856 | testAUC_ROC 0.9640 |  testAUCpr 0.8004 
+Epoch 460 | Loss 6.8635 | TrainAUC 0.9860 | testAUC_ROC 0.9642 |  testAUCpr 0.8109 
+Epoch 470 | Loss 6.8653 | TrainAUC 0.9862 | testAUC_ROC 0.9649 |  testAUCpr 0.8066 
+Epoch 480 | Loss 6.8167 | TrainAUC 0.9865 | testAUC_ROC 0.9662 |  testAUCpr 0.8163 
+Epoch 490 | Loss 6.8192 | TrainAUC 0.9865 | testAUC_ROC 0.9656 |  testAUCpr 0.8189 
+Epoch 500 | Loss 6.8180 | TrainAUC 0.9863 | testAUC_ROC 0.9678 |  testAUCpr 0.8292 
+Epoch 500 - Average weights - PM:0.311, PP:0.182, PF:0.507
+Epoch 510 | Loss 6.7820 | TrainAUC 0.9869 | testAUC_ROC 0.9680 |  testAUCpr 0.8255 
+Epoch 520 | Loss 6.7631 | TrainAUC 0.9877 | testAUC_ROC 0.9672 |  testAUCpr 0.8286 
+Epoch 530 | Loss 6.7358 | TrainAUC 0.9876 | testAUC_ROC 0.9678 |  testAUCpr 0.8245 
+Epoch 540 | Loss 6.7753 | TrainAUC 0.9870 | testAUC_ROC 0.9690 |  testAUCpr 0.8307 
+Epoch 550 | Loss 6.7146 | TrainAUC 0.9879 | testAUC_ROC 0.9700 |  testAUCpr 0.8417 
+Epoch 560 | Loss 6.7129 | TrainAUC 0.9882 | testAUC_ROC 0.9708 |  testAUCpr 0.8398 
+Epoch 570 | Loss 6.7178 | TrainAUC 0.9878 | testAUC_ROC 0.9712 |  testAUCpr 0.8423 
+Epoch 580 | Loss 6.6817 | TrainAUC 0.9884 | testAUC_ROC 0.9715 |  testAUCpr 0.8475 
+Epoch 590 | Loss 6.6666 | TrainAUC 0.9888 | testAUC_ROC 0.9709 |  testAUCpr 0.8497 
+Epoch 600 | Loss 6.6650 | TrainAUC 0.9889 | testAUC_ROC 0.9718 |  testAUCpr 0.8537 
+Epoch 600 - Average weights - PM:0.310, PP:0.182, PF:0.508
+Epoch 610 | Loss 6.6728 | TrainAUC 0.9888 | testAUC_ROC 0.9722 |  testAUCpr 0.8540 
+Epoch 620 | Loss 6.6621 | TrainAUC 0.9893 | testAUC_ROC 0.9722 |  testAUCpr 0.8526 
+Epoch 630 | Loss 6.6013 | TrainAUC 0.9896 | testAUC_ROC 0.9732 |  testAUCpr 0.8631 
+Epoch 640 | Loss 6.6272 | TrainAUC 0.9889 | testAUC_ROC 0.9729 |  testAUCpr 0.8603 
+Epoch 650 | Loss 6.5813 | TrainAUC 0.9895 | testAUC_ROC 0.9732 |  testAUCpr 0.8615 
+Epoch 660 | Loss 6.5726 | TrainAUC 0.9899 | testAUC_ROC 0.9736 |  testAUCpr 0.8598 
+Epoch 670 | Loss 6.5768 | TrainAUC 0.9899 | testAUC_ROC 0.9743 |  testAUCpr 0.8688 
+Epoch 680 | Loss 6.5816 | TrainAUC 0.9900 | testAUC_ROC 0.9735 |  testAUCpr 0.8653 
+Epoch 690 | Loss 6.5463 | TrainAUC 0.9902 | testAUC_ROC 0.9741 |  testAUCpr 0.8679 
+Epoch 700 | Loss 6.5498 | TrainAUC 0.9899 | testAUC_ROC 0.9751 |  testAUCpr 0.8690 
+Epoch 700 - Average weights - PM:0.310, PP:0.182, PF:0.508
+Epoch 710 | Loss 6.5296 | TrainAUC 0.9908 | testAUC_ROC 0.9745 |  testAUCpr 0.8721 
+Epoch 720 | Loss 6.5281 | TrainAUC 0.9902 | testAUC_ROC 0.9736 |  testAUCpr 0.8681 
+Epoch 730 | Loss 6.5102 | TrainAUC 0.9907 | testAUC_ROC 0.9746 |  testAUCpr 0.8693 
+Epoch 740 | Loss 6.5152 | TrainAUC 0.9901 | testAUC_ROC 0.9737 |  testAUCpr 0.8665 
+Epoch 750 | Loss 6.5003 | TrainAUC 0.9906 | testAUC_ROC 0.9760 |  testAUCpr 0.8755 
+Epoch 760 | Loss 6.5051 | TrainAUC 0.9906 | testAUC_ROC 0.9749 |  testAUCpr 0.8714 
+Epoch 770 | Loss 6.5143 | TrainAUC 0.9906 | testAUC_ROC 0.9774 |  testAUCpr 0.8786 
+Epoch 780 | Loss 6.5059 | TrainAUC 0.9906 | testAUC_ROC 0.9758 |  testAUCpr 0.8738 
+Epoch 790 | Loss 6.4623 | TrainAUC 0.9917 | testAUC_ROC 0.9751 |  testAUCpr 0.8739 
+Epoch 800 | Loss 6.4498 | TrainAUC 0.9912 | testAUC_ROC 0.9764 |  testAUCpr 0.8735 
+Epoch 800 - Average weights - PM:0.312, PP:0.182, PF:0.506
+Epoch 810 | Loss 6.4885 | TrainAUC 0.9909 | testAUC_ROC 0.9776 |  testAUCpr 0.8737 
+Epoch 820 | Loss 6.4371 | TrainAUC 0.9913 | testAUC_ROC 0.9756 |  testAUCpr 0.8781 
+Epoch 830 | Loss 6.4557 | TrainAUC 0.9912 | testAUC_ROC 0.9760 |  testAUCpr 0.8753 
+Epoch 840 | Loss 6.4204 | TrainAUC 0.9916 | testAUC_ROC 0.9778 |  testAUCpr 0.8795 
+Epoch 850 | Loss 6.4225 | TrainAUC 0.9918 | testAUC_ROC 0.9763 |  testAUCpr 0.8804 
+Epoch 860 | Loss 6.4263 | TrainAUC 0.9912 | testAUC_ROC 0.9760 |  testAUCpr 0.8767 
+Epoch 870 | Loss 6.3911 | TrainAUC 0.9917 | testAUC_ROC 0.9766 |  testAUCpr 0.8834 
+Epoch 880 | Loss 6.3755 | TrainAUC 0.9920 | testAUC_ROC 0.9779 |  testAUCpr 0.8831 
+Epoch 890 | Loss 6.4088 | TrainAUC 0.9917 | testAUC_ROC 0.9772 |  testAUCpr 0.8838 
+Epoch 900 | Loss 6.4494 | TrainAUC 0.9912 | testAUC_ROC 0.9773 |  testAUCpr 0.8853 
+Epoch 900 - Average weights - PM:0.323, PP:0.183, PF:0.494
+Epoch 910 | Loss 6.4011 | TrainAUC 0.9920 | testAUC_ROC 0.9773 |  testAUCpr 0.8819 
+Epoch 920 | Loss 6.3587 | TrainAUC 0.9922 | testAUC_ROC 0.9776 |  testAUCpr 0.8864 
+Epoch 930 | Loss 6.3477 | TrainAUC 0.9925 | testAUC_ROC 0.9764 |  testAUCpr 0.8852 
+Epoch 940 | Loss 6.3538 | TrainAUC 0.9922 | testAUC_ROC 0.9777 |  testAUCpr 0.8877 
+Epoch 950 | Loss 6.3526 | TrainAUC 0.9923 | testAUC_ROC 0.9782 |  testAUCpr 0.8900 
+Epoch 960 | Loss 6.3380 | TrainAUC 0.9926 | testAUC_ROC 0.9780 |  testAUCpr 0.8897 
+Epoch 970 | Loss 6.2993 | TrainAUC 0.9930 | testAUC_ROC 0.9779 |  testAUCpr 0.8901 
+Epoch 980 | Loss 6.3906 | TrainAUC 0.9920 | testAUC_ROC 0.9787 |  testAUCpr 0.8934 
+Epoch 990 | Loss 6.3111 | TrainAUC 0.9929 | testAUC_ROC 0.9779 |  testAUCpr 0.8910 
+Epoch 1000 | Loss 6.3401 | TrainAUC 0.9924 | testAUC_ROC 0.9781 |  testAUCpr 0.8891 
+Load model result: Epoch 993 testAUC_ROC 0.9791 |  testAUCpr 0.8943 
+5-th random split with training ratio 0.900000
+Epoch 001 | Loss 16.2280 | TrainAUC 0.5741 | testAUC_ROC 0.5316 |  testAUCpr 0.1094 
+Epoch 010 | Loss 11.9104 | TrainAUC 0.7270 | testAUC_ROC 0.8103 |  testAUCpr 0.3637 
+Epoch 020 | Loss 10.7682 | TrainAUC 0.9019 | testAUC_ROC 0.8972 |  testAUCpr 0.4556 
+Epoch 030 | Loss 10.2504 | TrainAUC 0.9147 | testAUC_ROC 0.9058 |  testAUCpr 0.4969 
+Epoch 040 | Loss 9.6823 | TrainAUC 0.9401 | testAUC_ROC 0.9150 |  testAUCpr 0.5317 
+Epoch 050 | Loss 9.2179 | TrainAUC 0.9498 | testAUC_ROC 0.9318 |  testAUCpr 0.5754 
+Epoch 060 | Loss 8.9307 | TrainAUC 0.9540 | testAUC_ROC 0.9308 |  testAUCpr 0.5803 
+Epoch 070 | Loss 8.6916 | TrainAUC 0.9576 | testAUC_ROC 0.9325 |  testAUCpr 0.5975 
+Epoch 080 | Loss 8.5205 | TrainAUC 0.9610 | testAUC_ROC 0.9341 |  testAUCpr 0.6134 
+Epoch 090 | Loss 8.3249 | TrainAUC 0.9660 | testAUC_ROC 0.9292 |  testAUCpr 0.5686 
+Epoch 100 | Loss 8.2592 | TrainAUC 0.9641 | testAUC_ROC 0.9322 |  testAUCpr 0.5989 
+Epoch 100 - Average weights - PM:0.306, PP:0.182, PF:0.512
+Epoch 110 | Loss 8.1929 | TrainAUC 0.9662 | testAUC_ROC 0.9278 |  testAUCpr 0.5488 
+Epoch 120 | Loss 8.0912 | TrainAUC 0.9666 | testAUC_ROC 0.9323 |  testAUCpr 0.6118 
+Epoch 130 | Loss 7.9904 | TrainAUC 0.9686 | testAUC_ROC 0.9316 |  testAUCpr 0.6080 
+Epoch 140 | Loss 7.9520 | TrainAUC 0.9695 | testAUC_ROC 0.9310 |  testAUCpr 0.6066 
+Epoch 150 | Loss 7.8700 | TrainAUC 0.9704 | testAUC_ROC 0.9337 |  testAUCpr 0.6162 
+Epoch 160 | Loss 7.8079 | TrainAUC 0.9707 | testAUC_ROC 0.9394 |  testAUCpr 0.6669 
+Epoch 170 | Loss 7.7855 | TrainAUC 0.9724 | testAUC_ROC 0.9369 |  testAUCpr 0.6529 
+Epoch 180 | Loss 7.6787 | TrainAUC 0.9734 | testAUC_ROC 0.9394 |  testAUCpr 0.6666 
+Epoch 190 | Loss 7.6532 | TrainAUC 0.9739 | testAUC_ROC 0.9404 |  testAUCpr 0.6706 
+Epoch 200 | Loss 7.5815 | TrainAUC 0.9747 | testAUC_ROC 0.9432 |  testAUCpr 0.6854 
+Epoch 200 - Average weights - PM:0.305, PP:0.182, PF:0.512
+Epoch 210 | Loss 7.5356 | TrainAUC 0.9757 | testAUC_ROC 0.9423 |  testAUCpr 0.6795 
+Epoch 220 | Loss 7.4840 | TrainAUC 0.9764 | testAUC_ROC 0.9411 |  testAUCpr 0.6844 
+Epoch 230 | Loss 7.4399 | TrainAUC 0.9776 | testAUC_ROC 0.9460 |  testAUCpr 0.7051 
+Epoch 240 | Loss 7.4068 | TrainAUC 0.9783 | testAUC_ROC 0.9495 |  testAUCpr 0.7210 
+Epoch 250 | Loss 7.3779 | TrainAUC 0.9784 | testAUC_ROC 0.9510 |  testAUCpr 0.7221 
+Epoch 260 | Loss 7.3472 | TrainAUC 0.9789 | testAUC_ROC 0.9524 |  testAUCpr 0.7283 
+Epoch 270 | Loss 7.3033 | TrainAUC 0.9803 | testAUC_ROC 0.9548 |  testAUCpr 0.7430 
+Epoch 280 | Loss 7.2787 | TrainAUC 0.9804 | testAUC_ROC 0.9532 |  testAUCpr 0.7329 
+Epoch 290 | Loss 7.3002 | TrainAUC 0.9806 | testAUC_ROC 0.9528 |  testAUCpr 0.7367 
+Epoch 300 | Loss 7.2116 | TrainAUC 0.9812 | testAUC_ROC 0.9566 |  testAUCpr 0.7511 
+Epoch 300 - Average weights - PM:0.306, PP:0.182, PF:0.512
+Epoch 310 | Loss 7.1910 | TrainAUC 0.9813 | testAUC_ROC 0.9566 |  testAUCpr 0.7524 
+Epoch 320 | Loss 7.1755 | TrainAUC 0.9818 | testAUC_ROC 0.9583 |  testAUCpr 0.7621 
+Epoch 330 | Loss 7.1299 | TrainAUC 0.9823 | testAUC_ROC 0.9596 |  testAUCpr 0.7713 
+Epoch 340 | Loss 7.1100 | TrainAUC 0.9827 | testAUC_ROC 0.9597 |  testAUCpr 0.7697 
+Epoch 350 | Loss 7.0777 | TrainAUC 0.9835 | testAUC_ROC 0.9624 |  testAUCpr 0.7849 
+Epoch 360 | Loss 7.0679 | TrainAUC 0.9836 | testAUC_ROC 0.9645 |  testAUCpr 0.7954 
+Epoch 370 | Loss 7.0339 | TrainAUC 0.9843 | testAUC_ROC 0.9651 |  testAUCpr 0.8015 
+Epoch 380 | Loss 7.0746 | TrainAUC 0.9842 | testAUC_ROC 0.9659 |  testAUCpr 0.8071 
+Epoch 390 | Loss 7.0133 | TrainAUC 0.9841 | testAUC_ROC 0.9648 |  testAUCpr 0.7981 
+Epoch 400 | Loss 7.0218 | TrainAUC 0.9844 | testAUC_ROC 0.9646 |  testAUCpr 0.7970 
+Epoch 400 - Average weights - PM:0.307, PP:0.182, PF:0.510
+Epoch 410 | Loss 6.9976 | TrainAUC 0.9847 | testAUC_ROC 0.9662 |  testAUCpr 0.8109 
+Epoch 420 | Loss 6.9521 | TrainAUC 0.9852 | testAUC_ROC 0.9651 |  testAUCpr 0.7972 
+Epoch 430 | Loss 6.9370 | TrainAUC 0.9856 | testAUC_ROC 0.9670 |  testAUCpr 0.8073 
+Epoch 440 | Loss 6.9321 | TrainAUC 0.9858 | testAUC_ROC 0.9670 |  testAUCpr 0.8054 
+Epoch 450 | Loss 6.9229 | TrainAUC 0.9857 | testAUC_ROC 0.9678 |  testAUCpr 0.8142 
+Epoch 460 | Loss 6.8672 | TrainAUC 0.9869 | testAUC_ROC 0.9688 |  testAUCpr 0.8164 
+Epoch 470 | Loss 6.8758 | TrainAUC 0.9873 | testAUC_ROC 0.9681 |  testAUCpr 0.8115 
+Epoch 480 | Loss 6.8473 | TrainAUC 0.9869 | testAUC_ROC 0.9707 |  testAUCpr 0.8295 
+Epoch 490 | Loss 6.8480 | TrainAUC 0.9868 | testAUC_ROC 0.9682 |  testAUCpr 0.8137 
+Epoch 500 | Loss 6.8275 | TrainAUC 0.9877 | testAUC_ROC 0.9709 |  testAUCpr 0.8302 
+Epoch 500 - Average weights - PM:0.311, PP:0.182, PF:0.507
+Epoch 510 | Loss 6.9192 | TrainAUC 0.9870 | testAUC_ROC 0.9722 |  testAUCpr 0.8401 
+Epoch 520 | Loss 6.8150 | TrainAUC 0.9875 | testAUC_ROC 0.9718 |  testAUCpr 0.8362 
+Epoch 530 | Loss 6.7874 | TrainAUC 0.9881 | testAUC_ROC 0.9701 |  testAUCpr 0.8177 
+Epoch 540 | Loss 6.7515 | TrainAUC 0.9885 | testAUC_ROC 0.9711 |  testAUCpr 0.8320 
+Epoch 550 | Loss 6.7422 | TrainAUC 0.9885 | testAUC_ROC 0.9728 |  testAUCpr 0.8423 
+Epoch 560 | Loss 6.7272 | TrainAUC 0.9888 | testAUC_ROC 0.9737 |  testAUCpr 0.8471 
+Epoch 570 | Loss 6.7367 | TrainAUC 0.9888 | testAUC_ROC 0.9727 |  testAUCpr 0.8427 
+Epoch 580 | Loss 6.7687 | TrainAUC 0.9887 | testAUC_ROC 0.9736 |  testAUCpr 0.8464 
+Epoch 590 | Loss 6.7231 | TrainAUC 0.9887 | testAUC_ROC 0.9745 |  testAUCpr 0.8533 
+Epoch 600 | Loss 6.6851 | TrainAUC 0.9897 | testAUC_ROC 0.9737 |  testAUCpr 0.8484 
+Epoch 600 - Average weights - PM:0.313, PP:0.182, PF:0.505
+Epoch 610 | Loss 6.6962 | TrainAUC 0.9892 | testAUC_ROC 0.9762 |  testAUCpr 0.8638 
+Epoch 620 | Loss 6.6800 | TrainAUC 0.9893 | testAUC_ROC 0.9754 |  testAUCpr 0.8566 
+Epoch 630 | Loss 6.6733 | TrainAUC 0.9898 | testAUC_ROC 0.9759 |  testAUCpr 0.8631 
+Epoch 640 | Loss 6.6656 | TrainAUC 0.9897 | testAUC_ROC 0.9767 |  testAUCpr 0.8710 
+Epoch 650 | Loss 6.6418 | TrainAUC 0.9903 | testAUC_ROC 0.9768 |  testAUCpr 0.8709 
+Epoch 660 | Loss 6.6490 | TrainAUC 0.9898 | testAUC_ROC 0.9756 |  testAUCpr 0.8620 
+Epoch 670 | Loss 6.6439 | TrainAUC 0.9898 | testAUC_ROC 0.9773 |  testAUCpr 0.8667 
+Epoch 680 | Loss 6.6252 | TrainAUC 0.9901 | testAUC_ROC 0.9764 |  testAUCpr 0.8677 
+Epoch 690 | Loss 6.6604 | TrainAUC 0.9895 | testAUC_ROC 0.9761 |  testAUCpr 0.8715 
+Epoch 700 | Loss 6.6076 | TrainAUC 0.9903 | testAUC_ROC 0.9786 |  testAUCpr 0.8750 
+Epoch 700 - Average weights - PM:0.314, PP:0.182, PF:0.504
+Epoch 710 | Loss 6.5914 | TrainAUC 0.9906 | testAUC_ROC 0.9775 |  testAUCpr 0.8712 
+Epoch 720 | Loss 6.6157 | TrainAUC 0.9905 | testAUC_ROC 0.9764 |  testAUCpr 0.8696 
+Epoch 730 | Loss 6.6257 | TrainAUC 0.9900 | testAUC_ROC 0.9783 |  testAUCpr 0.8766 
+Epoch 740 | Loss 6.5789 | TrainAUC 0.9906 | testAUC_ROC 0.9772 |  testAUCpr 0.8727 
+Epoch 750 | Loss 6.5770 | TrainAUC 0.9908 | testAUC_ROC 0.9786 |  testAUCpr 0.8849 
+Epoch 760 | Loss 6.5550 | TrainAUC 0.9909 | testAUC_ROC 0.9782 |  testAUCpr 0.8769 
+Epoch 770 | Loss 6.5562 | TrainAUC 0.9912 | testAUC_ROC 0.9786 |  testAUCpr 0.8816 
+Epoch 780 | Loss 6.5521 | TrainAUC 0.9912 | testAUC_ROC 0.9788 |  testAUCpr 0.8785 
+Epoch 790 | Loss 6.5140 | TrainAUC 0.9914 | testAUC_ROC 0.9790 |  testAUCpr 0.8825 
+Epoch 800 | Loss 6.5300 | TrainAUC 0.9913 | testAUC_ROC 0.9788 |  testAUCpr 0.8796 
+Epoch 800 - Average weights - PM:0.313, PP:0.182, PF:0.505
+Epoch 810 | Loss 6.5307 | TrainAUC 0.9916 | testAUC_ROC 0.9790 |  testAUCpr 0.8791 
+Epoch 820 | Loss 6.5303 | TrainAUC 0.9913 | testAUC_ROC 0.9792 |  testAUCpr 0.8875 
+Epoch 830 | Loss 6.5143 | TrainAUC 0.9917 | testAUC_ROC 0.9778 |  testAUCpr 0.8832 
+Epoch 840 | Loss 6.5038 | TrainAUC 0.9917 | testAUC_ROC 0.9799 |  testAUCpr 0.8897 
+Epoch 850 | Loss 6.5232 | TrainAUC 0.9915 | testAUC_ROC 0.9791 |  testAUCpr 0.8857 
+Epoch 860 | Loss 6.4865 | TrainAUC 0.9918 | testAUC_ROC 0.9777 |  testAUCpr 0.8728 
+Epoch 870 | Loss 6.4868 | TrainAUC 0.9921 | testAUC_ROC 0.9801 |  testAUCpr 0.8881 
+Epoch 880 | Loss 6.5455 | TrainAUC 0.9919 | testAUC_ROC 0.9799 |  testAUCpr 0.8894 
+Epoch 890 | Loss 6.4911 | TrainAUC 0.9915 | testAUC_ROC 0.9800 |  testAUCpr 0.8878 
+Epoch 900 | Loss 6.4757 | TrainAUC 0.9923 | testAUC_ROC 0.9809 |  testAUCpr 0.8925 
+Epoch 900 - Average weights - PM:0.314, PP:0.182, PF:0.503
+Epoch 910 | Loss 6.4733 | TrainAUC 0.9921 | testAUC_ROC 0.9818 |  testAUCpr 0.8936 
+Epoch 920 | Loss 6.4666 | TrainAUC 0.9922 | testAUC_ROC 0.9790 |  testAUCpr 0.8892 
+Epoch 930 | Loss 6.4360 | TrainAUC 0.9926 | testAUC_ROC 0.9797 |  testAUCpr 0.8945 
+Epoch 940 | Loss 6.4379 | TrainAUC 0.9925 | testAUC_ROC 0.9821 |  testAUCpr 0.8972 
+Epoch 950 | Loss 6.4374 | TrainAUC 0.9925 | testAUC_ROC 0.9806 |  testAUCpr 0.8979 
+Epoch 960 | Loss 6.4359 | TrainAUC 0.9927 | testAUC_ROC 0.9804 |  testAUCpr 0.8951 
+Epoch 970 | Loss 6.4145 | TrainAUC 0.9929 | testAUC_ROC 0.9808 |  testAUCpr 0.8953 
+Epoch 980 | Loss 6.4002 | TrainAUC 0.9930 | testAUC_ROC 0.9804 |  testAUCpr 0.8935 
+Epoch 990 | Loss 6.4090 | TrainAUC 0.9929 | testAUC_ROC 0.9807 |  testAUCpr 0.8968 
+Epoch 1000 | Loss 6.4307 | TrainAUC 0.9926 | testAUC_ROC 0.9803 |  testAUCpr 0.8921 
+Load model result: Epoch 995 testAUC_ROC 0.9815 |  testAUCpr 0.8994 
+AUC_ROCAll: 
+
+0.978447 
+
+0.001741 
+
+AUC_PRAll: 
+
+0.890580 
+
+0.005712 
+

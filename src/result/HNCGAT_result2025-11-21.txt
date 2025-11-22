@@ -1,0 +1,7 @@
+Namespace(gpu=0, n_epochs=1000, lr=0.005, lamb=1, hid_dim=64, dropout=0.5, temperature=0.1, edgetype='concat', use_weighted_loss=True, weight_attention=True, weight_temperature=0.5)
+avg AUC_ROC: 0.977685 + 0.001720, for trp:0.90 
+avg  AUC_PRtrp: 0.887334 + 0.005264, for trp:0.90 
+AUC_ROCAll:0.977685,
+AUCstd:0.001720,
+AUC_PRAll:0.887334,
+AUC_PRstd:0.005264,

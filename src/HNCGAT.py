@@ -17,12 +17,168 @@ from datetime import date
 
 # protein: nodeA; Metabolite: nodeB; GO: nodeC
 
+class GraphDiffusion(torch.nn.Module):
+    """
+    图扩散模块：在相似度/结构图上进行多步扩散。
+    这里采用对称归一化的多阶邻接累加（近似热扩散 / Random Walk with Restart 形式）：
+        S = I + alpha * A_norm + alpha^2 * A_norm^2 + ... + alpha^K * A_norm^K
+    其中 A_norm = D^{-1/2} A D^{-1/2}
+    """
+    def __init__(self, K: int = 3, alpha: float = 0.2):
+        super(GraphDiffusion, self).__init__()
+        self.K = K
+        self.alpha = alpha
+
+    def forward(self, adj: torch.Tensor) -> torch.Tensor:
+        """
+        adj: [N, N] 的稠密相似度/邻接矩阵（非负）
+        返回: 扩散后的相似度矩阵 S
+        """
+        # 确保为浮点类型
+        adj = adj.float()
+        # 添加自环，保证每个节点至少和自己相连
+        N = adj.size(0)
+        device = adj.device
+        I = torch.eye(N, device=device)
+        adj_with_self = adj + I
+
+        # 对称归一化 A_norm = D^{-1/2} A D^{-1/2}
+        deg = adj_with_self.sum(1, keepdim=True).clamp(min=1.0)
+        D_inv_sqrt = deg.pow(-0.5)
+        A_norm = D_inv_sqrt * adj_with_self * D_inv_sqrt.t()
+
+        # 多阶扩散累加
+        S = I.clone()
+        current = A_norm
+        for k in range(1, self.K + 1):
+            S = S + (self.alpha ** k) * current
+            current = torch.mm(current, A_norm)
+
+        # 归一化到 [0,1] 区间，避免数值过大
+        S_min = S.min()
+        S_max = S.max()
+        if (S_max - S_min) > 1e-8:
+            S = (S - S_min) / (S_max - S_min)
+        return S
+
+
+class DiffusionHNCGATEncoder(torch.nn.Module):
+    """
+    扩散增强的异质图注意力编码器：
+    - 首先在蛋白相似图 / 代谢物相似图上进行图扩散，得到扩散图
+    - 同时利用异质边 (P-M, P-F, M-F) 构造同质“共邻居”图，与原始相似图融合
+    - 最终将扩散后的相似度矩阵输入原始的 graphNetworkEmbbed
+
+    这样实现了“扩散图 + 异质注意力”的结构，既提高全局结构建模能力，又与原论文框架保持兼容。
+    """
+    def __init__(self, nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num,
+                 nodeC_feature_num, hidden_dim, dropout,
+                 use_diffusion: bool = False,
+                 diff_K: int = 3,
+                 diff_alpha: float = 0.2,
+                 diff_beta: float = 0.5):
+        super(DiffusionHNCGATEncoder, self).__init__()
+        self.use_diffusion = use_diffusion
+        self.diff_beta = diff_beta
+
+        # 扩散算子（同质图）
+        if use_diffusion:
+            self.diffusion_protein = GraphDiffusion(K=diff_K, alpha=diff_alpha)
+            self.diffusion_metabolite = GraphDiffusion(K=diff_K, alpha=diff_alpha)
+
+        # 原始异质图注意力编码器（保持不变）
+        self.base_encoder = graphNetworkEmbbed(
+            nodeA_num, nodeB_num,
+            nodeA_feature_num, nodeB_feature_num, nodeC_feature_num,
+            hidden_dim, dropout
+        )
+
+    def build_meta_graphs(self,
+                          adj_AB: torch.Tensor,
+                          adj_AC: torch.Tensor,
+                          adj_BC: torch.Tensor) -> (torch.Tensor, torch.Tensor):
+        """
+        基于异质边构造蛋白/代谢物同质“共邻居”图：
+            A_meta = A-B-A + A-F-A
+            B_meta = B-A-B + B-F-B
+        其中 A-B-A 表示两个蛋白通过代谢物共邻居连接。
+        """
+        # 确保为 float
+        adj_AB = adj_AB.float()
+        adj_AC = adj_AC.float()
+        adj_BC = adj_BC.float()
+
+        # A_meta: [numA, numA]
+        A_meta_PM = torch.mm(adj_AB, adj_AB.t())
+        A_meta_PF = torch.mm(adj_AC, adj_AC.t())
+        A_meta = (A_meta_PM > 0).float() + (A_meta_PF > 0).float()
+
+        # B_meta: [numB, numB]
+        B_meta_MP = torch.mm(adj_AB.t(), adj_AB)
+        B_meta_MF = torch.mm(adj_BC, adj_BC.t())
+        B_meta = (B_meta_MP > 0).float() + (B_meta_MF > 0).float()
+
+        # 去掉对角线将在扩散中重新加自环
+        A_meta.fill_diagonal_(0.0)
+        B_meta.fill_diagonal_(0.0)
+        return A_meta, B_meta
+
+    def forward(self,
+                adj_AB: torch.Tensor,
+                adj_AC: torch.Tensor,
+                adj_BC: torch.Tensor,
+                nodeA_feature: torch.Tensor,
+                nodeB_feature: torch.Tensor,
+                nodeC_feature: torch.Tensor,
+                adj_A_sim: torch.Tensor,
+                adj_B_sim: torch.Tensor):
+
+        if self.use_diffusion:
+            # 基于异质边构造同质图（每个模型实例只计算一次并缓存）
+            if not hasattr(self, "_A_meta") or not hasattr(self, "_B_meta"):
+                A_meta, B_meta = self.build_meta_graphs(adj_AB, adj_AC, adj_BC)
+                self._A_meta = A_meta.to(adj_A_sim.device)
+                self._B_meta = B_meta.to(adj_B_sim.device)
+            else:
+                A_meta, B_meta = self._A_meta, self._B_meta
+
+            # 将原始相似图与共邻居图融合，再做扩散
+            # adj_A_sim / adj_B_sim 可能为0/1或权重，这里先转为float
+            A_base = adj_A_sim.float()
+            B_base = adj_B_sim.float()
+
+            A_fused = A_base + self.diff_beta * A_meta.to(A_base.device)
+            B_fused = B_base + self.diff_beta * B_meta.to(B_base.device)
+
+            diff_A_sim = self.diffusion_protein(A_fused)
+            diff_B_sim = self.diffusion_metabolite(B_fused)
+        else:
+            diff_A_sim = adj_A_sim
+            diff_B_sim = adj_B_sim
+
+        # 调用原始异质图注意力编码器，但使用“扩散后”的相似度矩阵
+        nodeA_emb, nodeB_emb, nodeC_emb = self.base_encoder(
+            adj_AB, adj_AC, adj_BC,
+            nodeA_feature, nodeB_feature, nodeC_feature,
+            diff_A_sim, diff_B_sim
+        )
+        return nodeA_emb, nodeB_emb, nodeC_emb
+
+
 class MPINet(torch.nn.Module):
     def __init__(self, nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num, nodeC_feature_num, hidden_dim,
-                 dropout, edgetype, use_weighted_loss=False, use_attention=True, tau=0.1, weight_temperature=0.7):
+                 dropout, edgetype, use_weighted_loss=False, use_attention=True, tau=0.1, weight_temperature=0.7,
+                 use_diffusion: bool = False, diff_K: int = 3, diff_alpha: float = 0.2, diff_beta: float = 0.5):
         super(MPINet, self).__init__()
-        self.encoder_1 = graphNetworkEmbbed(nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num,
-                                            nodeC_feature_num, hidden_dim, dropout)
+        # 用“扩散 + 异质注意力”的编码器替换原始编码器
+        self.encoder_1 = DiffusionHNCGATEncoder(
+            nodeA_num, nodeB_num, nodeA_feature_num, nodeB_feature_num,
+            nodeC_feature_num, hidden_dim, dropout,
+            use_diffusion=use_diffusion,
+            diff_K=diff_K,
+            diff_alpha=diff_alpha,
+            diff_beta=diff_beta
+        )
         self.decoder = MlpDecoder(hidden_dim, edgetype)
         self.use_weighted_loss = use_weighted_loss
         
@@ -357,7 +513,11 @@ def main(args):
                            use_weighted_loss=args.use_weighted_loss,
                            use_attention=args.weight_attention,
                            tau=tau,
-                           weight_temperature=args.weight_temperature)
+                           weight_temperature=args.weight_temperature,
+                           use_diffusion=args.use_diffusion,
+                           diff_K=args.diffusion_K,
+                           diff_alpha=args.diffusion_alpha,
+                           diff_beta=args.diffusion_beta)
             
             # Determine device
             device = torch.device(f'cuda:{args.gpu}' if args.gpu >= 0 and torch.cuda.is_available() else 'cpu')
@@ -511,6 +671,15 @@ if __name__ == "__main__":
                         help='Use attention mechanism for learning weights (default: True)')
     parser.add_argument('--weight-temperature', type=float, default=0.7,
                         help='Temperature parameter for weight softmax (default: 0.7). Lower values make weights more uniform, higher values allow more concentration.')
+    # 扩散图相关超参数
+    parser.add_argument('--use-diffusion', action='store_true',
+                        help='Use diffusion-enhanced similarity graphs for proteins and metabolites.')
+    parser.add_argument('--diffusion-K', type=int, default=3,
+                        help='Number of diffusion steps K for GraphDiffusion.')
+    parser.add_argument('--diffusion-alpha', type=float, default=0.2,
+                        help='Decay factor alpha for higher-order diffusion powers.')
+    parser.add_argument('--diffusion-beta', type=float, default=0.5,
+                        help='Fusion weight for meta-graphs built from heterogeneous edges.')
     args = parser.parse_args()
     print(args)
     warnings.filterwarnings("ignore")
