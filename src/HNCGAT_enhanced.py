@@ -242,10 +242,11 @@ def main(args):
             neg_train_mask = neg_train_mask.astype(bool)
             neg_test_mask = neg_test_mask.astype(bool)
             
-            train_adj_AB = np.zeros_like(adj_AB)
-            for idx in pos_train_index:
-                idxi = pos_u[idx]
-                idxj = pos_v[idx]
+            # 构建训练用的邻接矩阵（使用正确的维度）
+            train_adj_AB = np.zeros((nodeA_num, nodeB_num), dtype=int)
+            for i in pos_train_index:
+                idxi = pos_data_set[i, 0]
+                idxj = pos_data_set[i, 1]
                 train_adj_AB[idxi][idxj] = 1
             
             train_mask = np.array(np.concatenate((pos_train_mask, neg_train_mask), 0), dtype=np.bool)
