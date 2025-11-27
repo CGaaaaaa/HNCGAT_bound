@@ -249,9 +249,9 @@ def main(args):
                 idxj = pos_data_set[i, 1]
                 train_adj_AB[idxi][idxj] = 1
             
-            train_mask = np.array(np.concatenate((pos_train_mask, neg_train_mask), 0), dtype=np.bool)
+            train_mask = np.array(np.concatenate((pos_train_mask, neg_train_mask), 0), dtype=bool)
             train_mask = torch.tensor(train_mask)
-            test_mask = np.array(np.concatenate((pos_test_mask, neg_test_mask), 0), dtype=np.bool)
+            test_mask = np.array(np.concatenate((pos_test_mask, neg_test_mask), 0), dtype=bool)
             test_mask = torch.tensor(test_mask)
             data_set = np.concatenate((pos_data_set, neg_data_set), 0)
             data_set = torch.tensor(data_set).long()
