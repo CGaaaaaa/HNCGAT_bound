@@ -219,17 +219,28 @@ def main(args):
             
             modelfilename = f'./model/enhanced_HNCGAT_model_trp{trp}_run{times}.pkl'
             
-            # 划分训练集和测试集
-            pos_train_index, pos_test_index = get_train_index(len(pos_u), trp)
-            neg_train_index, neg_test_index = get_train_index(len(negative_sample_index), trp)
+            # 划分训练集和测试集（使用原始HNCGAT的调用方式）
+            val_ratio = 0.0
+            test_ratio = 1.0 - trp
+            n_splits = 5
+            split_index = times  # 使用当前的run次数作为split_index
             
-            pos_train_mask = np.zeros(len(pos_u), dtype=bool)
-            pos_train_mask[pos_train_index] = True
-            pos_test_mask = ~pos_train_mask
+            pos_idx_train, pos_idx_val, pos_idx_test, pos_y_train, pos_y_val, pos_y_test, pos_train_mask, pos_val_mask, pos_test_mask = get_train_index(
+                pos_u, trp, val_ratio, test_ratio, n_splits, split_index)
+            neg_idx_train, neg_idx_val, neg_idx_test, neg_y_train, neg_y_val, neg_y_test, neg_train_mask, neg_val_mask, neg_test_mask = get_train_index(
+                negative_sample_index, trp, val_ratio, test_ratio, n_splits, split_index)
             
-            neg_train_mask = np.zeros(len(negative_sample_index), dtype=bool)
-            neg_train_mask[neg_train_index] = True
-            neg_test_mask = ~neg_train_mask
+            # 提取索引
+            pos_train_index = pos_idx_train
+            pos_test_index = pos_idx_test
+            neg_train_index = neg_idx_train
+            neg_test_index = neg_idx_test
+            
+            # 转换为布尔掩码（使用get_train_index返回的mask）
+            pos_train_mask = pos_train_mask.astype(bool)
+            pos_test_mask = pos_test_mask.astype(bool)
+            neg_train_mask = neg_train_mask.astype(bool)
+            neg_test_mask = neg_test_mask.astype(bool)
             
             train_adj_AB = np.zeros_like(adj_AB)
             for idx in pos_train_index:
