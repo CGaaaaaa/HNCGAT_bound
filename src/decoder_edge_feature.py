@@ -63,7 +63,7 @@ class EdgeFeatureExtractor(nn.Module):
     
     def compute_common_annotations(self, adj_AC, adj_BC, protein_indices, metabolite_indices):
         """
-        计算蛋白和代谢物的共同功能注释数量
+        计算蛋白和代谢物的共同功能注释数量（内存友好版本）
         
         Args:
             adj_AC: [N_A, N_C] 蛋白-GO邻接矩阵
@@ -74,15 +74,33 @@ class EdgeFeatureExtractor(nn.Module):
         Returns:
             common_annotations: [batch_size] 共同GO term数量
         """
-        protein_gos = adj_AC[protein_indices]  # [batch_size, N_C]
-        metabolite_gos = adj_BC[metabolite_indices]  # [batch_size, N_C]
-        common = (protein_gos * metabolite_gos).sum(1)  # [batch_size]
-        return common
+        # 内存友好：使用torch.index_select而不是直接索引
+        # 如果batch太大，分批处理
+        batch_size = protein_indices.size(0)
+        if batch_size > 10000:
+            # 分批处理
+            results = []
+            chunk_size = 5000
+            for i in range(0, batch_size, chunk_size):
+                end_idx = min(i + chunk_size, batch_size)
+                p_idx = protein_indices[i:end_idx]
+                m_idx = metabolite_indices[i:end_idx]
+                
+                protein_gos = adj_AC[p_idx]  # [chunk_size, N_C]
+                metabolite_gos = adj_BC[m_idx]  # [chunk_size, N_C]
+                common = (protein_gos * metabolite_gos).sum(1)  # [chunk_size]
+                results.append(common)
+            return torch.cat(results, dim=0)
+        else:
+            protein_gos = adj_AC[protein_indices]  # [batch_size, N_C]
+            metabolite_gos = adj_BC[metabolite_indices]  # [batch_size, N_C]
+            common = (protein_gos * metabolite_gos).sum(1)  # [batch_size]
+            return common
     
     def compute_similarity_features(self, adj_A_sim, adj_B_sim, diff_A_sim, diff_B_sim,
                                    protein_indices, metabolite_indices):
         """
-        计算相似度特征（原始相似度 + 扩散相似度）
+        计算相似度特征（原始相似度 + 扩散相似度，内存友好版本）
         
         Returns:
             protein_sim: [batch_size] 蛋白对之间的相似度
@@ -98,23 +116,53 @@ class EdgeFeatureExtractor(nn.Module):
         # - 蛋白i在蛋白相似图中的平均相似度（表示该蛋白的"hub"程度）
         # - 代谢物j在代谢物相似图中的平均相似度
         
-        protein_avg_sim = adj_A_sim[protein_indices].mean(1)  # [batch_size]
-        metabolite_avg_sim = adj_B_sim[metabolite_indices].mean(1)  # [batch_size]
+        batch_size = protein_indices.size(0)
         
-        if self.use_diffusion and diff_A_sim is not None and diff_B_sim is not None:
-            protein_diff_avg_sim = diff_A_sim[protein_indices].mean(1)
-            metabolite_diff_avg_sim = diff_B_sim[metabolite_indices].mean(1)
+        # 分批处理以避免内存溢出
+        if batch_size > 10000:
+            chunk_size = 5000
+            protein_sims = []
+            metabolite_sims = []
+            protein_diff_sims = []
+            metabolite_diff_sims = []
+            
+            for i in range(0, batch_size, chunk_size):
+                end_idx = min(i + chunk_size, batch_size)
+                p_idx = protein_indices[i:end_idx]
+                m_idx = metabolite_indices[i:end_idx]
+                
+                protein_sims.append(adj_A_sim[p_idx].mean(1))
+                metabolite_sims.append(adj_B_sim[m_idx].mean(1))
+                
+                if self.use_diffusion and diff_A_sim is not None and diff_B_sim is not None:
+                    protein_diff_sims.append(diff_A_sim[p_idx].mean(1))
+                    metabolite_diff_sims.append(diff_B_sim[m_idx].mean(1))
+                else:
+                    protein_diff_sims.append(adj_A_sim[p_idx].mean(1))
+                    metabolite_diff_sims.append(adj_B_sim[m_idx].mean(1))
+            
+            protein_avg_sim = torch.cat(protein_sims, dim=0)
+            metabolite_avg_sim = torch.cat(metabolite_sims, dim=0)
+            protein_diff_avg_sim = torch.cat(protein_diff_sims, dim=0)
+            metabolite_diff_avg_sim = torch.cat(metabolite_diff_sims, dim=0)
         else:
-            protein_diff_avg_sim = protein_avg_sim
-            metabolite_diff_avg_sim = metabolite_avg_sim
+            protein_avg_sim = adj_A_sim[protein_indices].mean(1)  # [batch_size]
+            metabolite_avg_sim = adj_B_sim[metabolite_indices].mean(1)  # [batch_size]
+            
+            if self.use_diffusion and diff_A_sim is not None and diff_B_sim is not None:
+                protein_diff_avg_sim = diff_A_sim[protein_indices].mean(1)
+                metabolite_diff_avg_sim = diff_B_sim[metabolite_indices].mean(1)
+            else:
+                protein_diff_avg_sim = protein_avg_sim
+                metabolite_diff_avg_sim = metabolite_avg_sim
         
         return protein_avg_sim, metabolite_avg_sim, protein_diff_avg_sim, metabolite_diff_avg_sim
     
     def extract_edge_features(self, protein_indices, metabolite_indices,
                              adj_AB, adj_AC, adj_BC, adj_A_sim, adj_B_sim,
-                             diff_A_sim=None, diff_B_sim=None):
+                             diff_A_sim=None, diff_B_sim=None, batch_size_limit=5000):
         """
-        提取边特征
+        提取边特征（分批处理以避免内存溢出）
         
         Args:
             protein_indices: [batch_size] 蛋白索引
@@ -126,13 +174,48 @@ class EdgeFeatureExtractor(nn.Module):
             adj_B_sim: 代谢物相似度矩阵
             diff_A_sim: 蛋白扩散相似度矩阵（可选）
             diff_B_sim: 代谢物扩散相似度矩阵（可选）
+            batch_size_limit: 每批处理的样本数量上限（默认5000）
         
         Returns:
             edge_features: [batch_size, num_features] 边特征矩阵
         """
-        batch_size = protein_indices.size(0)
+        total_size = protein_indices.size(0)
         device = protein_indices.device
         
+        # 如果batch_size小于限制，直接处理
+        if total_size <= batch_size_limit:
+            return self._extract_edge_features_batch(
+                protein_indices, metabolite_indices,
+                adj_AB, adj_AC, adj_BC, adj_A_sim, adj_B_sim,
+                diff_A_sim, diff_B_sim
+            )
+        
+        # 分批处理
+        all_features = []
+        for i in range(0, total_size, batch_size_limit):
+            end_idx = min(i + batch_size_limit, total_size)
+            p_idx = protein_indices[i:end_idx]
+            m_idx = metabolite_indices[i:end_idx]
+            
+            batch_features = self._extract_edge_features_batch(
+                p_idx, m_idx,
+                adj_AB, adj_AC, adj_BC, adj_A_sim, adj_B_sim,
+                diff_A_sim, diff_B_sim
+            )
+            all_features.append(batch_features)
+        
+        # 拼接所有批次
+        edge_features = torch.cat(all_features, dim=0)
+        
+        # 归一化特征（避免不同特征的尺度差异过大）
+        edge_features = F.normalize(edge_features, p=2, dim=1)
+        
+        return edge_features
+    
+    def _extract_edge_features_batch(self, protein_indices, metabolite_indices,
+                                    adj_AB, adj_AC, adj_BC, adj_A_sim, adj_B_sim,
+                                    diff_A_sim, diff_B_sim):
+        """提取单个批次的边特征（内部方法）"""
         # 特征1：共同功能注释数量
         common_go = self.compute_common_annotations(adj_AC, adj_BC, protein_indices, metabolite_indices)
         
@@ -158,9 +241,6 @@ class EdgeFeatureExtractor(nn.Module):
             p_diff_sim.float(),
             m_diff_sim.float()
         ], dim=1)  # [batch_size, 7]
-        
-        # 归一化特征（避免不同特征的尺度差异过大）
-        edge_features = F.normalize(edge_features, p=2, dim=1)
         
         return edge_features
 
