@@ -74,13 +74,13 @@ class EdgeFeatureExtractor(nn.Module):
         Returns:
             common_annotations: [batch_size] 共同GO term数量
         """
-        # 内存友好：使用torch.index_select而不是直接索引
-        # 如果batch太大，分批处理
+        # 内存友好：分批处理，避免OOM
         batch_size = protein_indices.size(0)
-        if batch_size > 10000:
+        # 降低阈值，确保即使是中等batch也不会OOM
+        if batch_size > 2000:
             # 分批处理
             results = []
-            chunk_size = 5000
+            chunk_size = 2000  # 更小的chunk_size
             for i in range(0, batch_size, chunk_size):
                 end_idx = min(i + chunk_size, batch_size)
                 p_idx = protein_indices[i:end_idx]
@@ -90,6 +90,11 @@ class EdgeFeatureExtractor(nn.Module):
                 metabolite_gos = adj_BC[m_idx]  # [chunk_size, N_C]
                 common = (protein_gos * metabolite_gos).sum(1)  # [chunk_size]
                 results.append(common)
+                
+                # 清理中间变量，释放内存
+                del protein_gos, metabolite_gos
+                torch.cuda.empty_cache() if torch.cuda.is_available() else None
+            
             return torch.cat(results, dim=0)
         else:
             protein_gos = adj_AC[protein_indices]  # [batch_size, N_C]
@@ -118,9 +123,9 @@ class EdgeFeatureExtractor(nn.Module):
         
         batch_size = protein_indices.size(0)
         
-        # 分批处理以避免内存溢出
-        if batch_size > 10000:
-            chunk_size = 5000
+        # 分批处理以避免内存溢出（降低阈值）
+        if batch_size > 2000:
+            chunk_size = 2000  # 更小的chunk_size
             protein_sims = []
             metabolite_sims = []
             protein_diff_sims = []
@@ -140,6 +145,10 @@ class EdgeFeatureExtractor(nn.Module):
                 else:
                     protein_diff_sims.append(adj_A_sim[p_idx].mean(1))
                     metabolite_diff_sims.append(adj_B_sim[m_idx].mean(1))
+                
+                # 清理中间变量
+                del p_idx, m_idx
+                torch.cuda.empty_cache() if torch.cuda.is_available() else None
             
             protein_avg_sim = torch.cat(protein_sims, dim=0)
             metabolite_avg_sim = torch.cat(metabolite_sims, dim=0)
@@ -160,7 +169,7 @@ class EdgeFeatureExtractor(nn.Module):
     
     def extract_edge_features(self, protein_indices, metabolite_indices,
                              adj_AB, adj_AC, adj_BC, adj_A_sim, adj_B_sim,
-                             diff_A_sim=None, diff_B_sim=None, batch_size_limit=5000):
+                             diff_A_sim=None, diff_B_sim=None, batch_size_limit=2000):
         """
         提取边特征（分批处理以避免内存溢出）
         
@@ -203,9 +212,14 @@ class EdgeFeatureExtractor(nn.Module):
                 diff_A_sim, diff_B_sim
             )
             all_features.append(batch_features)
+            
+            # 清理中间变量，释放内存
+            del p_idx, m_idx, batch_features
+            torch.cuda.empty_cache() if torch.cuda.is_available() else None
         
         # 拼接所有批次
         edge_features = torch.cat(all_features, dim=0)
+        del all_features
         
         # 归一化特征（避免不同特征的尺度差异过大）
         edge_features = F.normalize(edge_features, p=2, dim=1)
